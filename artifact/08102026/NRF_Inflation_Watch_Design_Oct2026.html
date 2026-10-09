@@ -1,0 +1,267 @@
+<title>NRF Inflation Watch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+<style>
+/* Layout: policy-brief reading column with a sticky contents rail; signal colours reserved for thresholds. */
+:root {
+  --bg:#F7F8FA; --surface:#FFFFFF; --ink:#14213A; --muted:#55607A; --rule:#D5DBE6; --tint:#EDF1F7;
+  --accent:#0B3D91; --accent-2:#1F6FD1; --hero-ink:#FFFFFF; --hero-muted:#C9D7F0;
+  --ok:#1E7A46; --ok-bg:#E3F3EA; --warn:#9A6200; --warn-bg:#FCF0D9; --crit:#B3261E; --crit-bg:#FBE4E2;
+  --f-display:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  --f-mono:"IBM Plex Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg:#0E1420; --surface:#151C2B; --ink:#E6EBF4; --muted:#9AA6BD; --rule:#2B3549; --tint:#1A2335;
+  --accent:#8DB4F5; --accent-2:#6FA0EE; --hero-ink:#FFFFFF; --hero-muted:#B7C6E3;
+  --ok:#6FD39A; --ok-bg:#163326; --warn:#F2C065; --warn-bg:#3A2C10; --crit:#F59088; --crit-bg:#3D1A18; color-scheme:dark } }
+:root[data-theme="dark"] {
+  --bg:#0E1420; --surface:#151C2B; --ink:#E6EBF4; --muted:#9AA6BD; --rule:#2B3549; --tint:#1A2335;
+  --accent:#8DB4F5; --accent-2:#6FA0EE; --hero-ink:#FFFFFF; --hero-muted:#B7C6E3;
+  --ok:#6FD39A; --ok-bg:#163326; --warn:#F2C065; --warn-bg:#3A2C10; --crit:#F59088; --crit-bg:#3D1A18; color-scheme:dark }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.65 var(--f-body); }
+.hero { background:#0B2A63; color:var(--hero-ink); padding-block:44px 36px; padding-inline:max(16px, 6vw); }
+.hero .kicker { font:600 12px/1 var(--f-body); letter-spacing:.16em; text-transform:uppercase; color:var(--hero-muted); }
+.hero h1 { font:600 clamp(32px,5vw,52px)/1.08 var(--f-display); margin:12px 0 12px; text-wrap:balance; }
+.hero .sub { max-width:62ch; color:var(--hero-muted); margin:0 0 20px; font-size:17px; }
+.band { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
+.band span { font:500 12px/1 var(--f-mono); padding:7px 10px; border:1px solid rgba(255,255,255,.28); border-radius:3px; color:var(--hero-ink); }
+.layout { display:grid; grid-template-columns:260px minmax(0,1fr); }
+.layout > * { min-width:0; }
+nav.toc { position:sticky; top:env(safe-area-inset-top,0px); align-self:start; max-height:100vh; overflow:auto; padding:28px 18px; border-right:1px solid var(--rule); }
+nav.toc h2 { font:600 11px/1 var(--f-body); letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin:0 0 12px; }
+nav.toc ol { list-style:none; margin:0; padding:0; display:grid; gap:2px; }
+nav.toc a { display:block; padding:6px 8px; border-radius:4px; color:var(--ink); text-decoration:none; font-size:14px; line-height:1.35; }
+nav.toc a:hover, nav.toc a:focus-visible { background:var(--tint); color:var(--accent); outline:none; }
+main { padding-block:32px 80px; padding-inline:max(16px, 4vw); max-width:1060px; }
+main h2 { font:600 28px/1.2 var(--f-display); color:var(--ink); margin:52px 0 14px; padding-top:18px; border-top:2px solid var(--ink); text-wrap:balance; scroll-margin-top:12px; }
+main h2:first-of-type { margin-top:8px; }
+main h3 { font:600 18px/1.3 var(--f-body); color:var(--accent); margin:30px 0 8px; }
+main p, main li { max-width:72ch; }
+main ul, main ol { padding-left:22px; display:grid; gap:6px; }
+code { font:0.9em var(--f-mono); background:var(--tint); padding:1px 5px; border-radius:3px; }
+.note { margin:18px 0; padding:14px 18px; background:var(--tint); border-left:4px solid var(--accent); }
+.note p { margin:0; }
+.table-wrap { overflow-x:auto; margin:14px 0 22px; border:1px solid var(--rule); border-radius:4px; background:var(--surface); }
+table { width:100%; border-collapse:collapse; font-size:14px; font-variant-numeric:tabular-nums; }
+thead th { background:var(--tint); color:var(--ink); text-align:left; padding:9px 12px; font-weight:600; border-bottom:2px solid var(--ink); white-space:nowrap; }
+td { border-top:1px solid var(--rule); padding:8px 12px; vertical-align:top; }
+tbody td:first-child { font-weight:600; }
+th.sig { color:var(--ink); }
+th.sig::before { content:""; display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:7px; vertical-align:middle; }
+th.sig-ok::before { background:var(--ok); } th.sig-warn::before { background:var(--warn); } th.sig-crit::before { background:var(--crit); }
+td.sig-ok { background:var(--ok-bg); } td.sig-warn { background:var(--warn-bg); } td.sig-crit { background:var(--crit-bg); }
+.code-wrap { overflow-x:auto; margin:14px 0 22px; background:var(--surface); border:1px solid var(--rule); border-radius:4px; }
+.code-wrap pre { margin:0; padding:16px 18px; font:12.5px/1.5 var(--f-mono); color:var(--ink); }
+main hr { display:none; }
+footer { border-top:1px solid var(--rule); color:var(--muted); font-size:13px; padding-block:20px; padding-inline:max(16px,4vw); }
+@media (max-width: 860px) {
+  .layout { grid-template-columns:1fr; }
+  nav.toc { position:static; max-height:none; border-right:0; border-bottom:1px solid var(--rule); padding-inline:16px; }
+}</style>
+<header class="hero">
+  <div class="kicker">Natural Resource Fund · Steering committee draft</div>
+  <h1>NRF Inflation Watch</h1>
+  <p class="sub">How to monitor and evaluate the inflation impact of the Natural Resource Fund (NRF), and the design of a platform to do it</p>
+  <div class="band"><span>October 2026</span><span>Draft for steering committee discussion</span><span>Companion to Kajian Danantara, NRF dan Tokenisasi (Oktober 2026)</span><span>BI target 2.5% ± 1%</span></div>
+</header>
+<div class="layout">
+  <nav class="toc" aria-label="Contents"><h2>Contents</h2><ol><li><a href="#1-why-the-nrf-needs-an-inflation-watch">1. Why the NRF needs an inflation watch</a></li><li><a href="#2-how-the-nrf-can-affect-inflation-transmission-channels">2. How the NRF can affect inflation: transmission channels</a></li><li><a href="#3-what-to-measure-indicator-framework">3. What to measure: indicator framework</a></li><li><a href="#4-how-to-evaluate-methods">4. How to evaluate: methods</a></li><li><a href="#5-inflation-guardrails-to-build-into-the-nrf-itself">5. Inflation guardrails to build into the NRF itself</a></li><li><a href="#6-the-platform-nrf-inflation-watch">6. The platform: NRF Inflation Watch</a></li><li><a href="#7-recommendations-to-the-steering-committee">7. Recommendations to the steering committee</a></li><li><a href="#annex-a-indicator-registry-template">Annex A. Indicator registry template</a></li><li><a href="#annex-b-glossary">Annex B. Glossary</a></li></ol></nav>
+  <main>
+<aside class="note"><p>This is a design note, not a macroeconomic forecast. The numbers in Section 2.3 are illustrative and use assumed parameters. They must be replaced by estimates from the models in Section 4 before anyone quotes them.</p></aside>
+<h2 id="1-why-the-nrf-needs-an-inflation-watch">1. Why the NRF needs an inflation watch</h2>
+<p>The NRF Executive Summary (25 Sept 2025) sets direct fiscal benefit targets of <strong>Rp100 T in year 1 and Rp1,000 T within three years</strong>. It projects a 2026 SDA benefit of Rp336 T (10.68% of state revenue) and coal capitalisation of at least Rp10,000 T. It is funded by securitising state-owned reserves (Sovereign ABS, mineral-based Sovereign Notes, Royalty-Backed Financing, Mineral Reserve Trust). Benefits are distributed through APBN debt reprofiling, tax revenue and Koperasi Merah Putih.</p>
+<p>The document does not discuss inflation. That gap matters for three reasons:</p>
+<ol><li><strong>Scale.</strong> Rp1,000 T is about 4% of nominal GDP (roughly Rp24,000 T). An injection that size, spent domestically and quickly, would visibly change demand.</li><li><strong>Price-setting levers.</strong> Coal is both the NRF's main asset and the main fuel for PLN electricity. Any change to coal pricing for fiscal capture feeds into administered prices.</li><li><strong>Credibility.</strong> Bank Indonesia's target is <strong>2.5% ± 1% (2025–2027)</strong>. Markets will judge whether reserve-backed financing is quietly monetised. A perception of "printing money against coal" can raise inflation expectations and the rupiah risk premium even before any rupiah is spent.</li></ol>
+<p>The inflation watch has two jobs:</p>
+<ul><li><strong>Monitor:</strong> detect early, at national and regional level, whether NRF activity is adding price pressure.</li><li><strong>Evaluate:</strong> after the fact, estimate how much of observed inflation is attributable to the NRF. The NRF's net benefit should then be reported net of that cost.</li></ul>
+<h2 id="2-how-the-nrf-can-affect-inflation-transmission-channels">2. How the NRF can affect inflation: transmission channels</h2>
+<h3>2.1 Channel map</h3>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Channel</th><th>Mechanism</th><th>Direction</th><th>Speed</th><th>What to watch</th></tr></thead><tbody>
+<tr><td>C1</td><td><strong>Fiscal demand</strong></td><td>Proceeds spent on projects, transfers or koperasi distribution raise aggregate demand</td><td>↑ inflation</td><td>2–6 quarters</td><td>Disbursement pace vs output gap; core inflation; retail sales</td></tr>
+<tr><td>C2</td><td><strong>Monetary financing</strong></td><td>If BI or the banking system absorbs NRF securities, base money or credit expands</td><td>↑ (strong if BI buys)</td><td>1–4 quarters</td><td>Buyer composition of each series; M0/M2; bank liquidity; BI primary purchases</td></tr>
+<tr><td>C3</td><td><strong>Exchange rate</strong></td><td>Foreign buyers of NRF paper → rupiah appreciation (disinflationary). A loss of credibility → depreciation and imported inflation</td><td>↕</td><td>0–3 months to rate, 1–3 quarters to CPI</td><td>USD/IDR (JISDOR), CDS, SBN yields, foreign holdings</td></tr>
+<tr><td>C4</td><td><strong>Energy and administered prices</strong></td><td>Coal re-pricing (DMO price for PLN, HBA-linked royalties) raises PLN cost → tariff or compensation pressure</td><td>↑ (administered)</td><td>Tied to tariff decisions (quarterly)</td><td>DMO coal price, PLN BPP, tariff adjustment, compensation budget</td></tr>
+<tr><td>C5</td><td><strong>Supply disruption</strong></td><td>Nationalising illegal mines and reviewing IUP/HGU can disrupt coal, nickel or plantation output (e.g. palm oil → cooking oil)</td><td>↑ (volatile food, energy)</td><td>1–6 months</td><td>Production volumes; cooking oil and rice prices in affected provinces</td></tr>
+<tr><td>C6</td><td><strong>Regional overheating</strong></td><td>Hilirisasi and anchor projects concentrate spending in mining regions (Kalimantan, Sulawesi, Maluku), so local wages, rent and food prices rise</td><td>↑ regional</td><td>2–8 quarters</td><td>Regional CPI vs national; local wages; housing rent</td></tr>
+<tr><td>C7</td><td><strong>Expectations</strong></td><td>Market reading of the NRF as fiscal dominance or a "resource currency"</td><td>↑</td><td>Immediate</td><td>BI price expectation indices; survey forecasts; yield curve</td></tr>
+<tr><td>C8</td><td><strong>Supply-side capacity (positive)</strong></td><td>Debt reprofiling lowers interest cost; productive investment (logistics, food chain, koperasi distribution) expands supply over time</td><td>↓</td><td>2–5 years</td><td>Logistics costs; price dispersion between regions; productivity</td></tr>
+</tbody></table></div>
+<h3>2.2 Which channels matter most</h3>
+<p>In order of risk for the NRF design as written:</p>
+<ol><li><strong>C2 monetary financing.</strong> This is the most dangerous channel and the easiest to prevent. It is a design choice, not a market outcome.</li><li><strong>C4 energy/administered prices.</strong> Coal is the quick win and also the electricity input. A coal-price decision is an inflation decision.</li><li><strong>C1 fiscal demand.</strong> It depends on how fast proceeds are spent and how much is saved or invested abroad.</li><li><strong>C7 expectations.</strong> Small in normal times, large if communication fails.</li></ol>
+<p>C8 is the reason to do the NRF at all. Over the long run, well-allocated investment lowers costs. The platform should measure it as well, so the evaluation is not one-sided.</p>
+<h3>2.3 Illustrative sizing of the fiscal demand channel (C1)</h3>
+<p>Assumptions (to be replaced by estimates): fiscal multiplier 0.3–0.8; inflation response 0.1–0.3 pp per 1% of GDP of extra demand; nominal GDP about Rp24,000 T.</p>
+<div class="table-wrap"><table><thead><tr><th>Scenario</th><th>Injection</th><th>% of GDP</th><th>Demand effect (% GDP)</th><th>Inflation effect (pp)</th></tr></thead><tbody>
+<tr><td>Year 1 target</td><td>Rp100 T</td><td>~0.4%</td><td>0.1–0.3%</td><td>~0.01–0.1</td></tr>
+<tr><td>Rp1,000 T spread over 3 years</td><td>~Rp333 T/yr</td><td>~1.4%/yr</td><td>0.4–1.1%</td><td>~0.04–0.3 per year</td></tr>
+<tr><td>Rp1,000 T spent in year 3</td><td>Rp1,000 T</td><td>~4%</td><td>1.2–3.2%</td><td>~0.1–1.0</td></tr>
+</tbody></table></div>
+<p><strong>Reading:</strong> the year-1 target is small for national inflation. A year-3 flow of Rp1,000 T could use up to the whole ±1 pp tolerance band, before counting C2, C4 or C7. Pacing and the savings share are therefore the main inflation levers inside the NRF's own control.</p>
+<h2 id="3-what-to-measure-indicator-framework">3. What to measure: indicator framework</h2>
+<p>Indicators are arranged in five layers, from outcome back to cause. Every indicator has an owner, source, frequency, threshold and an evidence class (A = official statistic, B = official administrative data, C = source-document claim, D = model estimate).</p>
+<h3>Layer 1: Inflation outcomes (BPS)</h3>
+<div class="table-wrap"><table><thead><tr><th>Indicator</th><th>Frequency</th><th>Source</th><th>Note</th></tr></thead><tbody>
+<tr><td>Headline CPI, yoy and mtm</td><td>Monthly (first working day)</td><td>BPS</td><td>Base 2022=100, 150 regencies/cities</td></tr>
+<tr><td>Core inflation</td><td>Monthly</td><td>BPS</td><td>Best signal of demand pressure (C1)</td></tr>
+<tr><td>Administered prices</td><td>Monthly</td><td>BPS</td><td>Electricity, fuel, transport (C4)</td></tr>
+<tr><td>Volatile food</td><td>Monthly</td><td>BPS</td><td>Supply shocks (C5); TPIP guidance about 3–5%</td></tr>
+<tr><td>Regional CPI (provincial and city)</td><td>Monthly</td><td>BPS</td><td>Needed for C6 and for regional evaluation</td></tr>
+<tr><td>Core 3-month annualised momentum</td><td>Monthly, derived</td><td>Platform</td><td>Catches turns earlier than yoy</td></tr>
+</tbody></table></div>
+<h3>Layer 2: High-frequency prices (nowcasting)</h3>
+<div class="table-wrap"><table><thead><tr><th>Indicator</th><th>Frequency</th><th>Source</th></tr></thead><tbody>
+<tr><td>Strategic food prices by province and market</td><td>Daily</td><td>PIHPS Nasional (BI)</td></tr>
+<tr><td>Food price panel</td><td>Daily</td><td>Panel Harga Pangan (Bapanas)</td></tr>
+<tr><td>Staple price monitoring</td><td>Daily/weekly</td><td>SP2KP (Kemendag)</td></tr>
+<tr><td>Fuel prices (subsidised and non-subsidised)</td><td>On change</td><td>Pertamina / ESDM</td></tr>
+<tr><td>Electricity tariff adjustment</td><td>Quarterly</td><td>ESDM / PLN</td></tr>
+</tbody></table></div>
+<h3>Layer 3: Upstream costs and external</h3>
+<div class="table-wrap"><table><thead><tr><th>Indicator</th><th>Frequency</th><th>Source</th></tr></thead><tbody>
+<tr><td>Producer and wholesale price indices</td><td>Monthly / quarterly</td><td>BPS</td></tr>
+<tr><td>USD/IDR (JISDOR), import price proxies</td><td>Daily</td><td>BI</td></tr>
+<tr><td>Coal reference price (HBA), DMO price for PLN</td><td>Periodic</td><td>ESDM</td></tr>
+<tr><td>Global commodity prices (energy, food, fertiliser)</td><td>Monthly</td><td>World Bank Pink Sheet, FAO Food Price Index</td></tr>
+</tbody></table></div>
+<h3>Layer 4: Monetary, financial and expectations</h3>
+<div class="table-wrap"><table><thead><tr><th>Indicator</th><th>Frequency</th><th>Source</th></tr></thead><tbody>
+<tr><td>BI-Rate, M0, M2, credit growth</td><td>Monthly</td><td>BI (SEKI)</td></tr>
+<tr><td>SBN yield curve, foreign holdings of SBN</td><td>Daily</td><td>Kemenkeu DJPPR, market data</td></tr>
+<tr><td>Sovereign CDS (5y)</td><td>Daily</td><td>Market data</td></tr>
+<tr><td>Price expectations of consumers and retailers</td><td>Monthly</td><td>BI Consumer Survey, Retail Sales Survey</td></tr>
+<tr><td>Consensus inflation forecasts</td><td>Monthly</td><td>Market surveys</td></tr>
+</tbody></table></div>
+<h3>Layer 5: NRF activity (internal; the layer that does not exist anywhere else)</h3>
+<div class="table-wrap"><table><thead><tr><th>Indicator</th><th>Frequency</th><th>Source</th><th>Channel</th></tr></thead><tbody>
+<tr><td>Securities issued by series and instrument type</td><td>Per issuance</td><td>NRF register (TEPSDA ledger)</td><td>C2, C3</td></tr>
+<tr><td><strong>Buyer composition</strong> (BI, banks, non-bank domestic, foreign, retail)</td><td>Per issuance</td><td>Registrar / KSEI</td><td>C2, C3</td></tr>
+<tr><td>Proceeds by use: savings, stabilisation, domestic investment, supplier development, distribution</td><td>Monthly</td><td>NRF ledger</td><td>C1</td></tr>
+<tr><td>Disbursement by province and sector</td><td>Monthly</td><td>NRF / Danantara project register</td><td>C1, C6</td></tr>
+<tr><td>Koperasi Merah Putih distribution (cash vs in-kind vs productive)</td><td>Monthly</td><td>Koperasi programme data</td><td>C1</td></tr>
+<tr><td>Coal pricing decisions affecting PLN; PLN compensation</td><td>On decision</td><td>ESDM, Kemenkeu</td><td>C4</td></tr>
+<tr><td>Production in IUP/HGU under review or nationalisation</td><td>Monthly</td><td>ESDM MODI/MOMS, Kementan</td><td>C5</td></tr>
+<tr><td>Debt reprofiled and interest saved</td><td>Quarterly</td><td>Kemenkeu</td><td>C8</td></tr>
+</tbody></table></div>
+<p><strong>Derived NRF indicators</strong></p>
+<ul><li><strong>NRF fiscal impulse</strong> = change in NRF-financed domestic spending, as % of GDP, per quarter.</li><li><strong>Monetisation share</strong> = share of NRF securities held by BI plus the change in bank holdings funded by BI liquidity.</li><li><strong>Domestic absorption ratio</strong> = proceeds spent domestically ÷ total proceeds. A lower ratio means less inflation pressure.</li><li><strong>Regional intensity</strong> = NRF disbursement per capita by province, used for regional evaluation.</li></ul>
+<h2 id="4-how-to-evaluate-methods">4. How to evaluate: methods</h2>
+<p>Evaluation answers two questions. <strong>Is there pressure now?</strong> (monitoring) and <strong>How much did the NRF cause?</strong> (attribution).</p>
+<h3>4.1 Monitoring: nowcast and early warning</h3>
+<div class="table-wrap"><table><thead><tr><th>Tool</th><th>What it does</th><th>Method</th></tr></thead><tbody>
+<tr><td>Monthly CPI nowcast</td><td>Predicts this month's CPI before BPS releases it</td><td>Bridge equations or a dynamic factor model on daily PIHPS/Bapanas prices, fuel and tariff changes</td></tr>
+<tr><td>Inflation decomposition</td><td>Splits headline into core, administered and volatile food, then into demand, supply and imported drivers</td><td>Component accounting plus sign-restricted model</td></tr>
+<tr><td>Early-warning dashboard</td><td>Traffic-light status per indicator</td><td>Thresholds below</td></tr>
+<tr><td>Regional heat map</td><td>Provinces where inflation exceeds national by a margin, overlaid with NRF disbursement</td><td>Regional CPI, NRF register</td></tr>
+</tbody></table></div>
+<p><strong>Suggested thresholds (to be calibrated with BI and TPIP)</strong></p>
+<div class="table-wrap"><table><thead><tr><th>Signal</th><th class="sig sig-ok">Green</th><th class="sig sig-warn">Amber</th><th class="sig sig-crit">Red</th></tr></thead><tbody>
+<tr><td>Headline CPI yoy</td><td class="sigcell sig-ok">1.5–3.5%</td><td class="sigcell sig-warn">3.5–4.0% or &lt; 1.5%</td><td class="sigcell sig-crit">&gt; 4.0%</td></tr>
+<tr><td>Core 3m annualised</td><td class="sigcell sig-ok">&lt; 3.0%</td><td class="sigcell sig-warn">3.0–4.0%</td><td class="sigcell sig-crit">&gt; 4.0%</td></tr>
+<tr><td>Volatile food yoy</td><td class="sigcell sig-ok">&lt; 5%</td><td class="sigcell sig-warn">5–8%</td><td class="sigcell sig-crit">&gt; 8%</td></tr>
+<tr><td>Provincial CPI minus national, in NRF-intensive provinces</td><td class="sigcell sig-ok">&lt; 1 pp</td><td class="sigcell sig-warn">1–2 pp</td><td class="sigcell sig-crit">&gt; 2 pp</td></tr>
+<tr><td>Monetisation share of NRF securities</td><td class="sigcell sig-ok">0%</td><td class="sigcell sig-warn">&gt; 0% under crisis framework</td><td class="sigcell sig-crit">Any BI primary purchase outside the legal crisis framework</td></tr>
+<tr><td>1-year inflation expectations</td><td class="sigcell sig-ok">Inside target band</td><td class="sigcell sig-warn">Edge of band</td><td class="sigcell sig-crit">Above band for 2 months</td></tr>
+<tr><td>USD/IDR 1-month change</td><td class="sigcell sig-ok">&lt; 3%</td><td class="sigcell sig-warn">3–5%</td><td class="sigcell sig-crit">&gt; 5%</td></tr>
+</tbody></table></div>
+<p>A red signal should trigger a defined response (Section 5), not only a chart.</p>
+<h3>4.2 Attribution: how much is the NRF's fault</h3>
+<p>Use more than one method and report the range.</p>
+<div class="table-wrap"><table><thead><tr><th>Method</th><th>Question it answers</th><th>Data need</th></tr></thead><tbody>
+<tr><td><strong>Structural VAR / local projections with an NRF fiscal shock</strong></td><td>National inflation response to an NRF spending or issuance shock</td><td>Quarterly macro series, NRF impulse</td></tr>
+<tr><td><strong>Regional difference-in-differences</strong></td><td>Did provinces with high NRF intensity see higher inflation than similar provinces with low intensity?</td><td>Regional CPI, disbursement per capita, controls</td></tr>
+<tr><td><strong>Synthetic control</strong></td><td>Counterfactual CPI for a single heavily affected region (e.g. a hilirisasi hub)</td><td>Regional panel</td></tr>
+<tr><td><strong>Pass-through models</strong></td><td>Effect of coal/DMO decisions on electricity and on CPI; exchange-rate pass-through</td><td>Tariff history, input-output tables</td></tr>
+<tr><td><strong>Ex-ante vs ex-post review</strong></td><td>Was the projected inflation impact at approval right?</td><td>Project approval files, outcomes</td></tr>
+</tbody></table></div>
+<p><strong>Evaluation output for each NRF review (quarterly or semi-annual):</strong></p>
+<ol><li>Estimated NRF contribution to headline and core inflation (pp, with range).</li><li>Contribution by channel C1–C8.</li><li>Regional hot spots.</li><li><strong>Real net benefit</strong> = nominal NRF benefit minus the welfare cost of the extra inflation. The cost should be reported for the bottom 40% of households separately, because food and energy inflation hit them hardest.</li><li>Recommendation: keep, slow or redirect disbursement.</li></ol>
+<h3>4.3 Real-time data discipline</h3>
+<p>Evaluate with the data that was available at the time of decision ("vintages"), not only revised data. Otherwise the review will judge decisions unfairly. The platform must store every release with its publication date.</p>
+<h2 id="5-inflation-guardrails-to-build-into-the-nrf-itself">5. Inflation guardrails to build into the NRF itself</h2>
+<p>Monitoring is only useful if it is tied to levers. Proposed rules for the NRF charter:</p>
+<ol><li><strong>No monetary financing.</strong> BI does not buy NRF or TEPSDA paper in the primary market, except under the existing legal crisis framework and its sunset rules. Buyer composition is disclosed per series.</li><li><strong>Savings and absorption rule.</strong> A legislated minimum share of proceeds goes to the savings tranche invested offshore (Norway, Chile, Timor-Leste model). Domestic spending is capped by an absorption rule linked to the output gap.</li><li><strong>Counter-cyclical pacing.</strong> When the dashboard shows red on core inflation or expectations for two consecutive months, new domestic disbursement for non-critical items is slowed. Approved project milestones continue.</li><li><strong>Coal price-setting is an inflation decision.</strong> Any change to DMO pricing or coal fiscal terms that affects PLN needs an inflation impact note and BI/Kemenkeu consultation before approval.</li><li><strong>Distribution design.</strong> Koperasi Merah Putih benefits should lean toward productive and supply-side uses (storage, distribution, cold chain, inputs for farmers). These lower food prices, whereas pure cash transfers add to demand.</li><li><strong>Regional absorption plans.</strong> Large projects in mining regions must include a local supply plan (food, housing, labour) agreed with the provincial TPID.</li><li><strong>Communication.</strong> NRF instruments are always described as rupiah-denominated state securities, not a currency (consistent with Ch. 6 of the main study).</li></ol>
+<h2 id="6-the-platform-nrf-inflation-watch">6. The platform: NRF Inflation Watch</h2>
+<h3>6.1 Users and decisions</h3>
+<div class="table-wrap"><table><thead><tr><th>User</th><th>Decision supported</th><th>View</th></tr></thead><tbody>
+<tr><td>NRF / Danantara steering committee</td><td>Pace and allocation of disbursement; approve coal pricing changes</td><td>Monthly brief, channel monitor, scenario lab</td></tr>
+<tr><td>Kemenkeu (fiscal)</td><td>Budget coordination, compensation</td><td>Fiscal impulse, administered prices</td></tr>
+<tr><td>BI (as data partner and observer)</td><td>Monetary stance; not directed by the platform</td><td>Monetisation share, expectations</td></tr>
+<tr><td>TPIP / TPID (central and regional inflation control teams)</td><td>Local food supply actions</td><td>Regional heat map, food prices</td></tr>
+<tr><td>Public (subset)</td><td>Transparency</td><td>Quarterly NRF inflation report</td></tr>
+</tbody></table></div>
+<p>The platform should <strong>complement</strong> the existing TPIP/TPID and BI systems, not compete with them. Its unique value is Layer 5: linking NRF flows to prices.</p>
+<h3>6.2 Architecture</h3>
+<div class="code-wrap"><pre> SOURCES                      PIPELINE                   ANALYTICS                 OUTPUTS
+ ───────                      ────────                   ─────────                 ───────
+ BPS WebAPI (CPI, PPI) ─┐
+ BI SEKI, PIHPS, JISDOR ─┤    Ingestion connectors       Nowcast models            Dashboards
+ Bapanas, Kemendag ──────┤ →  + validation + vintage  →  Decomposition        →    (national, regional,
+ ESDM (HBA, DMO, prod.) ─┤    store (time-series DB)     Attribution (VAR,          NRF channels)
+ Kemenkeu (SBN, APBN) ───┤    + data catalog             DiD, synth. control)      Alerts (email/WA)
+ Market data (CDS, FX) ──┤    + lineage                  Threshold engine          Monthly brief
+ World Bank, FAO ────────┤                               Scenario simulator        Quarterly report
+ NRF ledger / register ──┘    (restricted zone)                                    API for partners</pre></div>
+<p><strong>Components</strong></p>
+<div class="table-wrap"><table><thead><tr><th>Component</th><th>Suggested technology</th><th>Notes</th></tr></thead><tbody>
+<tr><td>Ingestion</td><td>Python connectors, scheduled (Airflow or Dagster)</td><td>One connector per source; schema checks; keep every vintage</td></tr>
+<tr><td>Storage</td><td>PostgreSQL + TimescaleDB; object storage for raw files</td><td>Separate restricted schema for NRF internal data</td></tr>
+<tr><td>Data catalog</td><td>Indicator registry (name, source, frequency, owner, evidence class, threshold)</td><td>The registry drives the dashboard, so adding an indicator is a config change</td></tr>
+<tr><td>Models</td><td>Python (statsmodels, PyMC), scheduled re-estimation</td><td>Version-controlled; each output stores model version</td></tr>
+<tr><td>Dashboard</td><td>Web app (e.g. Next.js or Streamlit for MVP) with map component</td><td>Indonesian and English</td></tr>
+<tr><td>Alerting</td><td>Rule engine on the threshold table</td><td>Escalation matrix in Section 5</td></tr>
+<tr><td>Security</td><td>Role-based access; NRF ledger and pre-release data restricted</td><td>Hosting in a national sovereign cloud, consistent with BSSN rules</td></tr>
+</tbody></table></div>
+<h3>6.3 Screens</h3>
+<ol><li><strong>Overview:</strong> headline, core, administered and volatile food; traffic lights; nowcast for the current month; BI target band.</li><li><strong>NRF channel monitor:</strong> one tile per channel C1–C8 with its leading indicator and status; issuance and buyer composition; fiscal impulse.</li><li><strong>Regional map:</strong> provincial inflation gap vs national, overlaid with NRF disbursement intensity; drill-down to city and commodity.</li><li><strong>Food and energy:</strong> daily strategic food prices; fuel and electricity; coal HBA and DMO.</li><li><strong>Scenario lab:</strong> "If the NRF disburses Rp X T in quarter Q through channel K, in region R, with Y% savings", showing projected inflation range. Also "if the DMO coal price rises to Z": electricity cost → CPI.</li><li><strong>Evaluation:</strong> latest attribution results, real net benefit, ex-ante vs ex-post comparison.</li></ol>
+<h3>6.4 Role of AI agents</h3>
+<p>Consistent with the multi-agent approach in the Danantara study, agents can reduce analyst workload. They should not make decisions.</p>
+<div class="table-wrap"><table><thead><tr><th>Agent</th><th>Task</th><th>Human control</th></tr></thead><tbody>
+<tr><td>Data steward</td><td>Monitors connectors, flags missing or anomalous data, checks against previous vintages</td><td>Analyst confirms corrections</td></tr>
+<tr><td>Price-signal analyst</td><td>Explains movements ("chili prices +18% in 3 provinces, likely weather; not NRF-related") with cited data</td><td>Analyst reviews</td></tr>
+<tr><td>Brief writer</td><td>Drafts the monthly NRF inflation brief from dashboard data</td><td>Economist edits and signs</td></tr>
+<tr><td>Scenario assistant</td><td>Runs the scenario simulator from natural-language questions and shows assumptions</td><td>Results labelled as model estimates</td></tr>
+</tbody></table></div>
+<p>Rules: every AI statement cites the indicator and vintage it used, and no AI output is published without a named human reviewer.</p>
+<h3>6.5 Delivery roadmap</h3>
+<div class="table-wrap"><table><thead><tr><th>Phase</th><th>Duration</th><th>Scope</th><th>Done when</th></tr></thead><tbody>
+<tr><td>0. MVP on public data</td><td>6–8 weeks</td><td>Layers 1–4 from public sources; overview, regional map and food screens; threshold alerts</td><td>Dashboard updates automatically after each BPS release and daily for food prices</td></tr>
+<tr><td>1. NRF data integration</td><td>+2–3 months</td><td>Layer 5 from NRF ledger and project register; channel monitor; restricted access</td><td>Buyer composition and disbursement by province visible</td></tr>
+<tr><td>2. Models</td><td>+3 months</td><td>Nowcast, decomposition, scenario lab; first attribution study</td><td>Nowcast error tracked; first quarterly evaluation report</td></tr>
+<tr><td>3. Institutionalise</td><td>+3 months</td><td>Data-sharing MoUs (BI, BPS, Bapanas, ESDM, Kemenkeu, TPIP); guardrails linked to alerts; public quarterly report</td><td>Steering committee uses the brief in every disbursement decision</td></tr>
+</tbody></table></div>
+<p><strong>Team for phase 0–2:</strong> 1 product lead, 2 data engineers, 2 economists or econometricians, 1 front-end developer, 1 data steward, plus a BI/BPS liaison.</p>
+<h2 id="7-recommendations-to-the-steering-committee">7. Recommendations to the steering committee</h2>
+<ol><li><strong>Add an inflation impact section to the NRF design.</strong> The Executive Summary should state the savings share, disbursement pacing rule and the no-monetisation rule.</li><li><strong>Make buyer composition and disbursement-by-region mandatory disclosures</strong> from the first issuance. Without them, the inflation impact cannot be evaluated.</li><li><strong>Treat coal pricing decisions as inflation decisions</strong> and require an impact note before approval.</li><li><strong>Build the platform MVP now on public data,</strong> so a pre-NRF baseline exists before the first rupiah is disbursed. Attribution needs a baseline.</li><li><strong>Report the NRF's benefit in real terms,</strong> net of its inflation cost and with a distributional view.</li><li><strong>Coordinate rather than duplicate.</strong> Sign data-sharing arrangements with BI, BPS and TPIP, and position the platform as the NRF-specific layer on top of existing inflation control.</li></ol>
+<h2 id="annex-a-indicator-registry-template">Annex A. Indicator registry template</h2>
+<div class="table-wrap"><table><thead><tr><th>Field</th><th>Example</th></tr></thead><tbody>
+<tr><td>ID</td><td>L5-02</td></tr>
+<tr><td>Name</td><td>Buyer composition of NRF securities</td></tr>
+<tr><td>Layer / channel</td><td>5 / C2, C3</td></tr>
+<tr><td>Definition</td><td>Share of each series held by BI, banks, non-bank domestic, foreign, retail at settlement and month-end</td></tr>
+<tr><td>Source / owner</td><td>NRF registrar; KSEI</td></tr>
+<tr><td>Frequency / lag</td><td>Per issuance; T+1</td></tr>
+<tr><td>Evidence class</td><td>B</td></tr>
+<tr><td>Thresholds</td><td>Green 0% BI; Red any BI primary purchase outside crisis framework</td></tr>
+<tr><td>Response</td><td>Escalate to steering committee and Kemenkeu within 24 hours</td></tr>
+</tbody></table></div>
+<h2 id="annex-b-glossary">Annex B. Glossary</h2>
+<div class="table-wrap"><table><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>BPS</td><td>Statistics Indonesia</td></tr>
+<tr><td>PIHPS</td><td>BI's national strategic food price information centre</td></tr>
+<tr><td>Bapanas</td><td>National Food Agency</td></tr>
+<tr><td>SP2KP</td><td>Kemendag staple price monitoring system</td></tr>
+<tr><td>TPIP / TPID</td><td>Central / regional inflation control teams</td></tr>
+<tr><td>DMO</td><td>Domestic market obligation (coal for domestic use, with a price cap for electricity)</td></tr>
+<tr><td>HBA</td><td>Coal reference price set by ESDM</td></tr>
+<tr><td>TEPSDA</td><td>Tokenised securities backed by natural resource revenue (proposed in the main study)</td></tr>
+<tr><td>Fiscal impulse</td><td>Change in fiscal stance that adds to demand, as % of GDP</td></tr>
+</tbody></table></div>
+  </main>
+</div>
+<footer>Draft for steering committee discussion · October 2026. Illustrative figures use assumed parameters and are not forecasts.</footer>

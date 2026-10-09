@@ -1,0 +1,1993 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Danantara NRF Tokenisasi</title>
+<style>
+:root { --navy:#00338D; --blue:#005EB8; --lb:#7FB2E5; --pale:#EEF3FA; --rule:#C9D3E3; --ink:#1A1A1A; --muted:#555; --bg:#FFFFFF; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 Arial, Helvetica, sans-serif; }
+header.hero { background:var(--navy); color:#fff; padding:56px 6vw 44px; position:relative; overflow:hidden; }
+header.hero::after { content:""; position:absolute; right:0; top:0; width:22%; height:100%; background:var(--blue); }
+header.hero::before { content:""; position:absolute; right:22%; top:0; width:10px; height:100%; background:#0091DA; z-index:1; }
+.hero .kicker { letter-spacing:.18em; text-transform:uppercase; font-size:13px; font-weight:700; color:#BFD4F2; }
+.hero h1 { font-size:clamp(28px,4vw,46px); line-height:1.1; margin:14px 0 10px; max-width:70%; position:relative; z-index:2; }
+.hero p { color:#DCE7F7; max-width:62%; margin:0; position:relative; z-index:2; }
+.layout { display:grid; grid-template-columns:280px minmax(0,1fr); gap:0; }
+.layout > * { min-width:0; }
+main { overflow-wrap:break-word; }
+th { white-space:nowrap; }
+nav.toc { position:sticky; top:0; align-self:start; height:100vh; overflow:auto; padding:28px 20px; border-right:1px solid var(--rule); background:#FAFBFD; }
+nav.toc h2 { font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--blue); margin:0 0 12px; }
+nav.toc ol { list-style:none; margin:0; padding:0; }
+nav.toc li a { display:block; padding:6px 8px; border-radius:4px; color:var(--navy); text-decoration:none; font-size:14px; line-height:1.35; }
+nav.toc li a:hover { background:var(--pale); }
+main { padding:36px 5vw 80px; max-width:1100px; }
+main h2 { color:var(--navy); font-size:28px; line-height:1.2; margin:56px 0 16px; padding-top:18px; border-top:3px solid var(--navy); }
+main h2:first-child { margin-top:0; }
+main h3 { color:var(--blue); font-size:19px; margin:30px 0 10px; }
+main p, main li { color:#262626; }
+main a { color:var(--blue); }
+table { width:100%; border-collapse:collapse; margin:16px 0 22px; font-size:14px; }
+thead th { background:var(--navy); color:#fff; text-align:left; padding:9px 10px; font-weight:700; }
+td { border-bottom:1px solid var(--rule); padding:8px 10px; vertical-align:top; }
+tbody tr:nth-child(even) td { background:var(--pale); }
+tbody td:first-child { color:var(--navy); font-weight:700; }
+blockquote { margin:18px 0; padding:14px 18px; background:var(--pale); border-left:6px solid var(--navy); color:#262626; }
+blockquote p { margin:0; }
+hr { border:0; border-top:1px solid var(--rule); margin:28px 0; }
+figure.chart { margin:18px 0 24px; padding:18px; border:1px solid var(--rule); background:#fff; }
+figure.chart svg { width:100%; height:auto; font-family:Arial, Helvetica, sans-serif; }
+.table-wrap { overflow-x:auto; }
+footer { padding:24px 5vw; color:var(--muted); font-size:13px; border-top:1px solid var(--rule); }
+@media (max-width: 900px) {
+  .layout { grid-template-columns:minmax(0,1fr); }
+  nav.toc { position:static; height:auto; border-right:0; border-bottom:1px solid var(--rule); }
+  header.hero::after, header.hero::before { display:none; }
+  .hero h1, .hero p { max-width:100%; }
+  main { padding:24px 16px 60px; }
+}
+@media print {
+  nav.toc { display:none; } .layout { display:block; }
+  header.hero { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  thead th, tbody tr:nth-child(even) td, blockquote { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  main h2 { break-before:page; }
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="kicker">Kajian internal · Oktober 2026 · Draf untuk diskusi manajemen</div>
+  <h1>Danantara, Natural Resource Fund dan Tokenisasi Cadangan Sumber Daya Alam</h1>
+  <p>Kajian transformasi terpadu, pembiayaan berbasis cadangan yang diverifikasi, dan tokenisasi proyek berdaulat untuk mengurangi pinjaman luar negeri</p>
+</header>
+<div class="layout">
+  <nav class="toc" aria-label="Daftar isi"><h2>Daftar isi</h2><ol><li><a href="#ringkasan-eksekutif">Ringkasan eksekutif</a></li><li><a href="#1-mandat-pertanyaan-kajian-sumber-dan-disiplin-bukti">1. Mandat, pertanyaan kajian, sumber dan disiplin bukti</a></li><li><a href="#2-diagnosis-danantara-dari-pengelola-aset-ke-penggerak-industri">2. Diagnosis Danantara: dari pengelola aset ke penggerak industri</a></li><li><a href="#3-diagnosis-fiskal-sumber-daya-alam-dan-gagasan-natural-resource-fund">3. Diagnosis fiskal sumber daya alam dan gagasan Natural Resource Fund</a></li><li><a href="#4-kondisi-target-platform-industri-yang-dibiayai-oleh-kekayaan-alam">4. Kondisi target: platform industri yang dibiayai oleh kekayaan alam</a></li><li><a href="#5-arsitektur-kelembagaan-danantara-nrf-kementerian-keuangan-bi-dan-ojk">5. Arsitektur kelembagaan: Danantara, NRF, Kementerian Keuangan, BI dan OJK</a></li><li><a href="#6-tokenisasi-atau-mata-uang-khusus-penilaian-opsi-instrumen">6. Tokenisasi atau mata uang khusus: penilaian opsi instrumen</a></li><li><a href="#7-dasar-cadangan-dan-valuasi-dari-tonase-ke-arus-kas-negara">7. Dasar cadangan dan valuasi: dari tonase ke arus kas negara</a></li><li><a href="#8-arsitektur-teknologi-tokenisasi">8. Arsitektur teknologi tokenisasi</a></li><li><a href="#9-penggunaan-dana-menghubungkan-nrf-dengan-platform-industri">9. Penggunaan dana: menghubungkan NRF dengan platform industri</a></li><li><a href="#10-tokenisasi-proyek-berdaulat-instrumen-pembiayaan-untuk-mengurangi-pinjaman-luar-negeri">10. Tokenisasi proyek berdaulat: instrumen pembiayaan untuk mengurangi pinjaman luar negeri</a></li><li><a href="#11-tata-kelola-pengungkapan-perlindungan-investor-dan-distribusi-manfaat">11. Tata kelola, pengungkapan, perlindungan investor dan distribusi manfaat</a></li><li><a href="#12-risiko-makro-fiskal-dan-uji-stres">12. Risiko makro-fiskal dan uji stres</a></li><li><a href="#13-pelajaran-internasional">13. Pelajaran internasional</a></li><li><a href="#14-agenda-transformasi-danantara-lainnya">14. Agenda transformasi Danantara lainnya</a></li><li><a href="#15-peta-jalan-terpadu">15. Peta jalan terpadu</a></li><li><a href="#16-keputusan-yang-diminta-dan-kpi">16. Keputusan yang diminta dan KPI</a></li><li><a href="#lampiran-a-glosarium">Lampiran A. Glosarium</a></li><li><a href="#lampiran-b-ringkasan-metrik-danantara">Lampiran B. Ringkasan metrik Danantara</a></li><li><a href="#lampiran-c-rujukan">Lampiran C. Rujukan</a></li><li><a href="#lampiran-d-batas-kajian">Lampiran D. Batas kajian</a></li></ol></nav>
+  <main><h2 id="ringkasan-eksekutif">Ringkasan eksekutif</h2>
+<h3 id="tesis">Tesis</h3>
+<p>Danantara perlu bergeser dari <strong>pengonsolidasi aset dan investor finansial</strong> menjadi <strong>platform kapabilitas industri nasional</strong> [D1–D4]. Gagasan Natural Resource Fund (NRF) [D5] menawarkan sumber modal baru dari kekayaan alam. Kajian ini menyimpulkan bahwa gagasan tersebut dapat memperkuat transformasi Danantara, tetapi <strong>hanya jika</strong> tiga syarat dipenuhi:</p>
+<ol>
+<li><strong>Instrumennya adalah efek, bukan mata uang.</strong> Token berbasis cadangan sebaiknya dirancang sebagai <em>efek beragun arus kas penerimaan negara dari sumber daya alam</em> yang ditokenisasi dan diselesaikan dalam Rupiah, bukan mata uang alternatif. UU 7/2011 tentang Mata Uang menetapkan Rupiah sebagai satu-satunya alat pembayaran yang sah, dan kewenangan penerbitan uang (termasuk Rupiah digital) ada pada Bank Indonesia.</li>
+<li><strong>Agunannya adalah arus kas, bukan tonase.</strong> Nilai yang dapat dibiayai adalah nilai kini bagian negara (royalti, PNBP, pajak dan dividen) dari <strong>cadangan terbukti dan terkira</strong> yang dilaporkan oleh Competent Person sesuai kode keluarga CRIRSCO (KCMI di Indonesia, JORC, NI 43-101 dan sejenisnya), setelah haircut harga, produksi, transisi energi dan risiko hukum. Nilai kapitalisasi in-situ seperti klaim "minimal Rp10.000 triliun" [D5] tidak dapat dipakai sebagai dasar penerbitan.</li>
+<li><strong>Hasilnya hanya membiayai investasi yang lolos gerbang.</strong> Dana NRF yang dikelola atau disalurkan melalui Danantara hanya boleh membiayai proyek yang lolos gerbang keputusan P0–P6, memiliki kasus finansial dan ekonomi, dan mendukung pembangunan pemasok dalam negeri melalui DOCK-UP. Dana ini bukan penutup belanja rutin.</li>
+</ol>
+<p>Sisi penyaluran dilengkapi <strong>Token Proyek Berdaulat (TPB)</strong> (Bab 10), yang mengembangkan usulan PALCapital PT PAL [D6]. TPB adalah efek Rupiah yang ditokenisasi dan beragun tagihan kontrak pemerintah atau arus kas proyek, dengan dana dilepas per milestone fisik langsung ke pemasok. Tujuannya memindahkan pembiayaan industri strategis <strong>dari pinjaman luar negeri ke tabungan domestik</strong>, sambil menaikkan kandungan lokal.</p>
+<h3 id="delapan-temuan-utama">Delapan temuan utama</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Temuan</th>
+<th>Sumber</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Fondasi hukum dan akses pendanaan Danantara sudah terbukti (obligasi DIM USD1,5 miliar, yield tertimbang 5,65%, permintaan 3,07×), tetapi imbal hasil disesuaikan risiko, nilai tambah BUMN dan dampak industri belum dapat dinilai.</td>
+<td>D1, D2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Implementasi Danantara masih didominasi konsolidasi aset; manufaktur maju, pengembangan pemasok dan kepemilikan teknologi adalah kesenjangan besar.</td>
+<td>D4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Kontribusi SDA terhadap APBN disebut turun dari 19,3% (2004–2014) menjadi 7,7% (2015–2024), dan penerimaan SDA 2024 kurang dari 50% beban bunga utang. Ini argumen kuat untuk memperbaiki <em>fiscal capture</em>.</td>
+<td>D5 (kelas C)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Klaim manfaat NRF (Rp100 T tahun pertama, Rp1.000 T dalam tiga tahun, kapitalisasi batubara Rp10.000 T) belum disertai metodologi, laporan cadangan per wilayah, atau perlakuan utang; tidak dapat dipakai untuk keputusan tanpa verifikasi.</td>
+<td>D5, D2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Pembiayaan berbasis sumber daya dengan kewajiban bayar kembali atau kupon tetap adalah <strong>kewajiban pembiayaan</strong> menurut substansinya; label <em>off budget</em> tidak menghilangkan risiko fiskal. Kendali negara atas SDA (Pasal 33) tidak otomatis memberi BPI hak menjaminkan cadangan atau PNBP.</td>
+<td>D1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Mata uang khusus berbasis cadangan tidak layak secara hukum dan berisiko tinggi secara moneter; pengalaman token negara berbasis minyak (Petro, Venezuela) menunjukkan risiko kredibilitas. Tokenisasi efek pemerintah sudah dipraktikkan di beberapa yurisdiksi dan merupakan jalur yang lebih realistis.</td>
+<td>Analisis kajian; rujukan eksternal</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Pelajaran internasional terkuat dari dana sumber daya (Norwegia, Chile, Botswana, Timor-Leste) adalah <strong>menabung dan menginvestasikan penerimaan</strong>, bukan meminjam terhadap cadangan yang belum ditambang.</td>
+<td>Rujukan eksternal</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Usulan PALCapital (tagihan kontrak Kemhan yang ditokenisasi, USD150 juta, escrow per milestone dengan verifikasi BKI) menunjukkan mekanisme penyaluran yang kuat. Namun denominasi USD, imbal hasil 7% dan pembingkaian "bukan utang" berarti instrumen itu belum mengurangi risiko valas maupun utang. Dengan denominasi Rupiah, harga terpatok kurva SBN, lokalisasi DOCK-UP dan valas domestik, kebutuhan PLN program ilustratif dapat turun dari 100% ke sekitar 30% nilai program.</td>
+<td>D6 (kelas C); ilustrasi kelas D</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="rekomendasi-utama">Rekomendasi utama</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keputusan</th>
+<th>Rekomendasi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bentuk instrumen</td>
+<td>Token Efek Berbasis Penerimaan SDA (<strong>TEPSDA</strong>): efek negara atau efek beragun aset yang ditokenisasi di jaringan berizin, diselesaikan dalam Rupiah (kemudian Rupiah digital), diawasi OJK</td>
+</tr>
+<tr>
+<td>Yang tidak direkomendasikan</td>
+<td>Mata uang atau <em>stablecoin</em> berbasis cadangan; token klaim tonase in-situ; penjaminan cadangan yang belum memiliki laporan Competent Person</td>
+</tr>
+<tr>
+<td>Kelembagaan</td>
+<td>NRF sebagai pemilik hak penerimaan dan penerbit (atau SPV penerbit) di bawah kerangka keuangan negara; Danantara sebagai pengelola investasi bermandat untuk bagian dana yang dialokasikan ke investasi produktif; BI untuk penyelesaian; OJK untuk efek dan penyelenggara</td>
+</tr>
+<tr>
+<td>Basis valuasi</td>
+<td>Hanya cadangan terbukti/terkira (KCMI/CRIRSCO), valuasi independen, NPV bagian negara, haircut berlapis, rasio cakupan minimum, re-estimasi tahunan</td>
+</tr>
+<tr>
+<td>Penggunaan dana</td>
+<td>Hilirisasi dan platform industri yang lolos gerbang P0–P6; DOCK-UP; bukan belanja rutin; porsi tabungan antargenerasi</td>
+</tr>
+<tr>
+<td>Pengurangan pinjaman luar negeri</td>
+<td><strong>Token Proyek Berdaulat (TPB)</strong>: efek Rupiah beragun tagihan kontrak pemerintah atau arus kas proyek, dilepas per milestone langsung ke pemasok; pilot pertama merestrukturisasi PALCapital (PAL-SUB-1) ke denominasi Rupiah; uji substitusi terhadap setiap PLN baru proyek industri</td>
+</tr>
+<tr>
+<td>Urutan</td>
+<td>Kajian hukum dan valuasi (0–6 bulan) → sandbox regulator dan pilot kecil (6–18 bulan) → perluasan bertahap berbasis bukti (18–36 bulan)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="1-mandat-pertanyaan-kajian-sumber-dan-disiplin-bukti">1. Mandat, pertanyaan kajian, sumber dan disiplin bukti</h2>
+<h3 id="11-tiga-mandat-danantara">1.1 Tiga mandat Danantara</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Aliran</th>
+<th>Pertanyaan kinerja</th>
+<th>Yang menentukan keberhasilan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Investasi</td>
+<td>Apakah modal yang ditempatkan menghasilkan imbal hasil yang cukup untuk risikonya?</td>
+<td>Imbal hasil bersih di atas benchmark, risiko dapat diterima, valuasi independen</td>
+</tr>
+<tr>
+<td>Operasi BUMN</td>
+<td>Apakah BUMN menjadi lebih produktif dan sehat karena intervensi Danantara?</td>
+<td>Produktivitas riil, economic profit, arus kas berkelanjutan, mutu layanan</td>
+</tr>
+<tr>
+<td>Industrialisasi</td>
+<td>Apakah tercipta kapabilitas industri tambahan yang kompetitif?</td>
+<td>Output kompetitif, nilai tambah domestik, teknologi, kerja berkelanjutan</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="12-pertanyaan-kajian">1.2 Pertanyaan kajian</h3>
+<p><strong>Pertanyaan utama:</strong> bagaimana Danantara dapat mengubah modal negara, termasuk modal yang bersumber dari kekayaan alam, menjadi imbal hasil berkelanjutan dan kapabilitas industri nasional yang dapat diverifikasi?</p>
+<p>Pertanyaan turunan baru:</p>
+<ol>
+<li>Apakah tokenisasi atau mata uang khusus berbasis cadangan SDA layak secara hukum, moneter dan keuangan?</li>
+<li>Bagaimana cadangan yang diestimasi oleh badan bersertifikasi internasional dapat diubah menjadi nilai yang dapat dibiayai secara jujur?</li>
+<li>Bagaimana hubungan kelembagaan antara NRF dan Danantara agar tidak terjadi duplikasi mandat atau penjaminan ganda?</li>
+<li>Bagaimana hasilnya disalurkan agar memperkuat platform industri, bukan sekadar menambah ruang belanja?</li>
+<li>Dapatkah tokenisasi proyek berdaulat menggantikan sebagian pinjaman luar negeri untuk pembangunan industri, dan dengan syarat apa?</li>
+</ol>
+<h3 id="13-sumber-kajian">1.3 Sumber kajian</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Kode</th>
+<th>Dokumen</th>
+<th>Tanggal</th>
+<th>Fokus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td>Evaluasi Tata Kelola Danantara dan Organisasi Industri Strategis</td>
+<td>2 Okt 2026</td>
+<td>Tata kelola, organisasi, gerbang, RASCI, koreksi asumsi pembiayaan</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>Studi Kinerja Danantara</td>
+<td>6 Okt 2026</td>
+<td>Bukti publik, 45 metrik, atribusi, uji stres</td>
+</tr>
+<tr>
+<td>D3</td>
+<td>DOCK-UP: Membangun Pemasok UKM Siap Produksi</td>
+<td>Okt 2026</td>
+<td>TRL/MRL, gerbang pemasok, pembiayaan bertahap</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>Danantara: Platform Kapabilitas Industri Nasional (infografik)</td>
+<td>Tanpa tanggal</td>
+<td>Portofolio, proyek anchor, BUMN Konstruksi, AI</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>Indonesia Natural Resource Fund: Executive Summary (infografik 1 halaman)</td>
+<td>25 Sep 2025 (nama berkas)</td>
+<td>Gagasan NRF, 8 langkah strategis, opsi monetisasi</td>
+</tr>
+<tr>
+<td>D6</td>
+<td>PALCapital: Sovereign Maritime Tokenization Engine, Rev B (PT PAL Indonesia, dek 15 halaman, rahasia)</td>
+<td>Tanpa tanggal (fase 1 Q4 2026)</td>
+<td>Tokenisasi tagihan kontrak Kemhan, escrow per milestone, arsitektur jaringan berizin, jalur sandbox OJK</td>
+</tr>
+</tbody>
+</table></div>
+<p>Selain D1–D6, kajian ini memakai rujukan hukum dan praktik internasional yang bersifat umum (Lampiran C). Rujukan eksternal tersebut berasal dari pengetahuan umum penyusun dan <strong>perlu diverifikasi dengan naskah resmi</strong> sebelum dikutip dalam dokumen keputusan.</p>
+<h3 id="14-disiplin-bukti">1.4 Disiplin bukti</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Kelas</th>
+<th>Arti</th>
+<th>Interpretasi yang diizinkan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>Diaudit atau dijamin independen</td>
+<td>Keyakinan tertinggi bila lingkup dan definisi cocok</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Observasi resmi yang dilaporkan</td>
+<td>Dapat dipakai dengan batasan assurance eksplisit</td>
+</tr>
+<tr>
+<td>C</td>
+<td>Pengumuman, proyeksi atau klaim</td>
+<td>Bukti niat, bukan hasil; perlu konfirmasi</td>
+</tr>
+<tr>
+<td>D</td>
+<td>Ilustrasi atau asumsi analis</td>
+<td>Hanya untuk metode dan sensitivitas</td>
+</tr>
+<tr>
+<td>NR</td>
+<td>Tidak dapat dinilai</td>
+<td>Berbeda dari nol dan dari kegagalan</td>
+</tr>
+</tbody>
+</table></div>
+<p>Seluruh angka dalam D5 diperlakukan sebagai <strong>kelas C</strong>: dokumen tersebut adalah ringkasan eksekutif tanpa lampiran metodologi, daftar wilayah, laporan Competent Person, atau model fiskal. Angka dalam D6 (nilai kontrak, kesenjangan modal kerja, biaya, penghematan, proyeksi pasar) juga <strong>kelas C</strong>: dokumen tersebut adalah dek usulan, belum disertai opini hukum, model keuangan atau persetujuan regulator. Ilustrasi numerik yang dibuat kajian ini (Bab 7 dan Bab 10.4) adalah <strong>kelas D</strong>.</p>
+<hr />
+<h2 id="2-diagnosis-danantara-dari-pengelola-aset-ke-penggerak-industri">2. Diagnosis Danantara: dari pengelola aset ke penggerak industri</h2>
+<h3 id="21-posisi-saat-ini">2.1 Posisi saat ini</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Sektor</th>
+<th>Aktivitas yang terlihat</th>
+<th>Penilaian</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pengembalian finansial</td>
+<td>Investasi pasar publik dan eksplorasi global</td>
+<td>Aktif</td>
+</tr>
+<tr>
+<td>Optimalisasi BUMN</td>
+<td>Portofolio, dividen, restrukturisasi</td>
+<td>Lebih matang</td>
+</tr>
+<tr>
+<td>Hilirisasi industri</td>
+<td>Smelter, alumina, soda kaustik</td>
+<td>Strategis, masih bertumpu pada pengolahan sumber daya</td>
+</tr>
+<tr>
+<td>Transisi energi</td>
+<td>Inisiatif waste-to-energy dan energi bersih</td>
+<td>Ekonomi proyek dan kepemilikan teknologi belum jelas</td>
+</tr>
+<tr>
+<td>Manufaktur maju</td>
+<td>Bukti publik terbatas</td>
+<td>Kesenjangan besar</td>
+</tr>
+<tr>
+<td>Pengembangan pemasok</td>
+<td>Lokalisasi dan rekayasa dalam negeri terbatas</td>
+<td>Kesenjangan besar</td>
+</tr>
+<tr>
+<td>Kepemilikan teknologi</td>
+<td>Mitra asing masih dominan</td>
+<td>Belum terbukti</td>
+</tr>
+</tbody>
+</table></div>
+<p>Sumber: D4 halaman 1 (penilaian kualitatif).</p>
+<h3 id="22-bukti-kinerja">2.2 Bukti kinerja</h3>
+<ul>
+<li><strong>Akses pendanaan terbukti:</strong> obligasi internasional DIM USD1,5 miliar (Juni 2026), dua tranche USD750 juta dengan yield 5,35% dan 5,95%, spread rata-rata 33 bps atas sovereign, permintaan sekitar 3,07 kali [D2].</li>
+<li><strong>Komitmen dan milestone:</strong> subscription bersyarat USD200 juta untuk CA–EDC (USD800 juta), konstruksi Bogor Raya 1 (Rp2,8 T, 1.500 ton/hari), groundbreaking enam proyek hilirisasi (nilai USD7 miliar) [D2].</li>
+<li><strong>Kinerja BUMN beragam:</strong> laba grup BRI −5,26%, laba Mandiri +0,93%, pendapatan PLN semester I +16,05% [D2]; angka ini tidak boleh dijumlahkan menjadi laba Danantara.</li>
+<li><strong>Profitabilitas portofolio disesuaikan risiko:</strong> NR.</li>
+</ul>
+<h3 id="23-empat-akar-masalah">2.3 Empat akar masalah</h3>
+<ol>
+<li><strong>Modal tanpa mekanisme konversi</strong> ke kapabilitas industri [D4, D2].</li>
+<li><strong>Proyek bersifat impor dan konstruksi</strong> dengan transfer teknologi terbatas [D4, D3].</li>
+<li><strong>BUMN berjalan sendiri</strong>, tanpa pemilik integrasi lintas DAM, DIM dan DDMF [D4, D1].</li>
+<li><strong>Dampak belum terukur</strong>; atribusi PDB memerlukan kontrafaktual [D2].</li>
+</ol>
+<h3 id="24-mengapa-diagnosis-ini-penting-bagi-nrf">2.4 Mengapa diagnosis ini penting bagi NRF</h3>
+<p>Bila dana baru dari NRF masuk ke ekosistem yang belum memiliki register proyek terpadu (selisih Rp18,9 triliun pada angka 40 proyek), mekanisme gerbang, dan ukuran hasil yang jujur, maka tambahan modal akan <strong>memperbesar masalah yang sama</strong>: lebih banyak pengumuman, lebih banyak konstruksi bermuatan impor, dan lebih sedikit kapabilitas. Karena itu, perbaikan tata kelola dan pengukuran (Bab 14) adalah <strong>prasyarat</strong> penggunaan dana NRF, bukan langkah sesudahnya.</p>
+<hr />
+<h2 id="3-diagnosis-fiskal-sumber-daya-alam-dan-gagasan-natural-resource-fund">3. Diagnosis fiskal sumber daya alam dan gagasan Natural Resource Fund</h2>
+<h3 id="31-masalah-yang-ingin-dijawab-d5">3.1 Masalah yang ingin dijawab D5</h3>
+<figure class="chart"><svg viewBox="0 0 680 222" role="img" aria-label="Kontribusi SDA terhadap APBN (rata-rata periode)" xmlns="http://www.w3.org/2000/svg"><text x="0" y="20" font-size="15" font-weight="700" fill="#00338D">Kontribusi SDA terhadap APBN (rata-rata periode)</text><text x="0" y="66" font-size="13" fill="#333">2004–2014</text><rect x="230" y="50" width="298.3" height="26" rx="3" fill="#00338D"/><text x="536.3" y="68" font-size="13" font-weight="700" fill="#00338D">19,3%</text><text x="0" y="112" font-size="13" fill="#333">2015–2024</text><rect x="230" y="96" width="119.0" height="26" rx="3" fill="#7FB2E5"/><text x="357.0" y="114" font-size="13" font-weight="700" fill="#00338D">7,7%</text><text x="0" y="158" font-size="13" fill="#333">2026 dengan NRF (proyeksi D5)</text><rect x="230" y="142" width="165.1" height="26" rx="3" fill="#005EB8"/><text x="403.1" y="160" font-size="13" font-weight="700" fill="#00338D">10,68% (rasio thd pendapatan)</text><text x="0" y="214" font-size="11" fill="#666">Sumber: D5 (kelas C). Basis rasio 2026 berbeda (terhadap pendapatan negara).</text></svg></figure>
+
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Klaim D5</th>
+<th>Angka</th>
+<th>Kelas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kontribusi SDA terhadap APBN</td>
+<td>19,3% (2004–2014) → 7,7% (2015–2024)</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Penerimaan SDA 2024 dibanding beban bunga utang</td>
+<td>Kurang dari 50%</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Porsi negara atas total potensi batubara</td>
+<td>Kurang dari 2%</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Kapitalisasi perusahaan tambang</td>
+<td>Rp1.684 triliun</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Proyeksi manfaat SDA 2026 dengan NRF</td>
+<td>Rp336 triliun; 10,68% pendapatan negara</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Target manfaat fiskal langsung</td>
+<td>Rp100 T (tahun 1); Rp1.000 T (tahun 3)</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Nilai kapitalisasi batubara dengan NRF</td>
+<td>Minimal Rp10.000 triliun</td>
+<td>C</td>
+</tr>
+</tbody>
+</table></div>
+<p>D5 menyimpulkan rendahnya <em>fiscal capture</em>: kekayaan alam yang dikuasai negara (Pasal 33 UUD 1945) tidak tercermin secara proporsional dalam penerimaan negara.</p>
+<h3 id="32-desain-nrf-menurut-d5">3.2 Desain NRF menurut D5</h3>
+<p>NRF dibentuk sebagai wadah pengelolaan kekayaan negara berbasis <strong>tanah, batubara dan mineral strategis lainnya</strong>, dengan <em>underlying asset</em> berupa cadangan mineral strategis yang <strong>100% milik negara</strong> dan <strong>diverifikasi sesuai standar pelaporan internasional (CRIRSCO: KCMI)</strong>. NRF dikelola secara korporasi, langsung di bawah Presiden, dengan batubara sebagai <em>quick win</em>.</p>
+<p><strong>Delapan langkah strategis (0–2 tahun):</strong></p>
+<ol>
+<li>Penertiban dan nasionalisasi tambang ilegal</li>
+<li>Peninjauan kembali IUP dan HGU</li>
+<li>Penguatan landasan hukum</li>
+<li>Pembentukan NRF di bawah Presiden</li>
+<li>Restrukturisasi kelembagaan BUMN terkait</li>
+<li>Integrasi sistem dan tata kelola pertambangan di bawah NRF</li>
+<li>Pengelolaan dan pemanfaatan hasil dana SDA</li>
+<li>Melibatkan Koperasi Merah Putih dan distribusi manfaat</li>
+</ol>
+<p><strong>Empat opsi monetisasi:</strong> (1) Sovereign Asset-Backed Securities, (2) Sovereign Note berbasis mineral, (3) Royalty-Backed Financing, dan (4) Mineral Reserve Trust. Persiapan pembentukan ditargetkan rampung dalam tiga bulan sejak persetujuan prinsip.</p>
+<h3 id="33-penilaian-awal-atas-d5">3.3 Penilaian awal atas D5</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Aspek</th>
+<th>Kekuatan</th>
+<th>Kesenjangan yang harus ditutup</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Masalah</td>
+<td>Penurunan kontribusi SDA dan rendahnya <em>fiscal capture</em> adalah argumen kebijakan yang kuat</td>
+<td>Perlu dipisahkan efek harga komoditas, perubahan rezim fiskal, dan kebocoran (tambang ilegal, under-reporting)</td>
+</tr>
+<tr>
+<td>Basis aset</td>
+<td>Merujuk standar CRIRSCO/KCMI</td>
+<td>Perlu dibedakan <em>sumber daya</em> dan <em>cadangan</em>; hanya cadangan yang layak ditambang secara ekonomi</td>
+</tr>
+<tr>
+<td>Valuasi</td>
+<td>Menyadari nilai kapitalisasi yang besar</td>
+<td>"Kapitalisasi Rp10.000 T" tampaknya nilai in-situ atau pasar, bukan nilai kini bagian negara; metodologi tidak tersedia</td>
+</tr>
+<tr>
+<td>Monetisasi</td>
+<td>Opsi yang dikenal di pasar</td>
+<td>Opsi (1), (2) dan (3) menciptakan kewajiban; perlakuan utang, rating dan dampak terhadap ruang fiskal belum dibahas</td>
+</tr>
+<tr>
+<td>Langkah 1–2</td>
+<td>Penertiban dan peninjauan izin dapat meningkatkan penerimaan</td>
+<td>Harus melalui proses hukum yang adil; risiko sengketa, arbitrase investasi dan persepsi kepastian hukum</td>
+</tr>
+<tr>
+<td>Kelembagaan</td>
+<td>Konsolidasi di bawah Presiden memberi otoritas</td>
+<td>Hubungan dengan Kementerian Keuangan, ESDM, BPI Danantara, MIND ID dan BUMN tambang belum dipetakan</td>
+</tr>
+<tr>
+<td>Distribusi manfaat</td>
+<td>Inklusi melalui koperasi</td>
+<td>Perlu perlindungan konsumen dan pencegahan mis-selling bila manfaat berbentuk efek</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="34-benturan-dengan-temuan-d1">3.4 Benturan dengan temuan D1</h3>
+<p>D1 telah menguji tiga asumsi yang sangat relevan bagi NRF:</p>
+<ul>
+<li><strong>"Obligasi berbasis sumber daya adalah modal non-utang"</strong>: keliru. Instrumen dengan kewajiban bayar kembali atau kupon tetap adalah kewajiban pembiayaan sesuai substansinya; label <em>off budget</em> tidak menghilangkan risiko fiskal atau kontinjensi.</li>
+<li><strong>"Pasal 33 memberi hak langsung menjaminkan cadangan atau royalti"</strong>: keliru. Kendali negara atas SDA tidak dengan sendirinya memberi BPI hak atas cadangan yang belum ditambang atau PNBP; diperlukan kajian hak dan otorisasi terpisah.</li>
+<li><strong>Pembiayaan berbasis sumber daya:</strong> perlu diperiksa pemilik hak pertambangan, hak menjual, kepastian cadangan dan produksi, offtake, pajak, penerimaan negara, hak menjaminkan, serta nilai kini pendapatan dan kewajiban. Pendapatan masa depan yang dipakai untuk membayar investor <strong>mengurangi ruang kas masa depan</strong>.</li>
+</ul>
+<p>Kajian ini membangun desain tokenisasi yang <strong>menghormati</strong> ketiga koreksi tersebut.</p>
+<hr />
+<h2 id="4-kondisi-target-platform-industri-yang-dibiayai-oleh-kekayaan-alam">4. Kondisi target: platform industri yang dibiayai oleh kekayaan alam</h2>
+<h3 id="41-logika-perubahan-yang-diperluas">4.1 Logika perubahan yang diperluas</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Tahap</th>
+<th>Mekanisme</th>
+<th>Bukti keberhasilan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kekayaan alam</td>
+<td>Cadangan terbukti dan terkira dilaporkan sesuai KCMI/CRIRSCO</td>
+<td>Laporan Competent Person per wilayah, diperbarui berkala</td>
+</tr>
+<tr>
+<td>Penerimaan negara</td>
+<td>Royalti, PNBP, pajak dan dividen ditangkap secara penuh</td>
+<td><em>Fiscal capture</em> naik terhadap baseline yang disepakati</td>
+</tr>
+<tr>
+<td>Modal</td>
+<td>Sebagian penerimaan ditabung; sebagian dimonetisasi melalui TEPSDA dengan batas cakupan</td>
+<td>Rasio cakupan, perlakuan utang transparan, rating terjaga</td>
+</tr>
+<tr>
+<td>Investasi</td>
+<td>Dana dialokasikan ke Danantara dengan mandat; proyek lolos gerbang P0–P6</td>
+<td>Kasus finansial dan ekonomi; register proyek</td>
+</tr>
+<tr>
+<td>Permintaan dan pemasok</td>
+<td>Proyek anchor dan hilirisasi menarik pemasok melalui DOCK-UP</td>
+<td>Pemasok lolos gerbang S1–S4</td>
+</tr>
+<tr>
+<td>Kapabilitas dan nilai</td>
+<td>Teknologi, kapasitas dan ekspor bertambah</td>
+<td>Metrik D01–D12 terhadap kontrafaktual</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="42-prinsip-pengubah-kekayaan-menjadi-kapabilitas">4.2 Prinsip pengubah kekayaan menjadi kapabilitas</h3>
+<ol>
+<li><strong>Kekayaan yang tidak terbarukan ditukar dengan aset yang produktif.</strong> Nilai cadangan yang ditambang harus diganti dengan aset lain (kapasitas industri, infrastruktur produktif, aset keuangan), bukan habis untuk konsumsi.</li>
+<li><strong>Tabung sebelum meminjam.</strong> Penerimaan aktual dari cadangan yang sedang ditambang adalah sumber utama; monetisasi cadangan masa depan dibatasi dan diberi rasio cakupan.</li>
+<li><strong>Satu cadangan, satu klaim.</strong> Setiap unit cadangan atau arus kas hanya boleh menjadi dasar satu instrumen; register bersama mencegah penjaminan ganda.</li>
+<li><strong>Hasil ekonomi tidak disajikan sebagai laba.</strong> Manfaat ekonomi proyek dilaporkan terpisah dari imbal hasil finansial dana [D2].</li>
+</ol>
+<h3 id="43-arsitektur-portofolio-yang-diperbarui">4.3 Arsitektur portofolio yang diperbarui</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Portofolio</th>
+<th>Isi</th>
+<th>Ukuran utama</th>
+<th>Pemilik (usulan)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0. BUMN operasi warisan</td>
+<td>BUMN yang dialihkan</td>
+<td>ROIC/economic profit; ROE bank</td>
+<td>DAM</td>
+</tr>
+<tr>
+<td>1. Pelestarian kekayaan</td>
+<td>Aset likuid dan global; termasuk porsi tabungan NRF</td>
+<td>TWR bersih vs benchmark</td>
+<td>DIM (mandat NRF)</td>
+</tr>
+<tr>
+<td>2. Infrastruktur strategis</td>
+<td>Energi, pelabuhan, logistik, kawasan industri</td>
+<td>IRR bersih, DPI/TVPI, PME</td>
+<td>DIM / DDMF</td>
+</tr>
+<tr>
+<td>3. Platform industri dan hilirisasi</td>
+<td>Proyek anchor; pengolahan mineral bernilai tambah</td>
+<td>Keberlanjutan finansial + ENPV/EIRR</td>
+<td>DDMF + unit Industri Strategis</td>
+</tr>
+<tr>
+<td>4. Inovasi</td>
+<td>Material maju, baterai, teknologi masa depan</td>
+<td>Pendanaan bertahap per milestone</td>
+<td>DIM / CTO</td>
+</tr>
+<tr>
+<td>5. Pengembangan pemasok</td>
+<td>UMKM, Tier 1–3, komponen</td>
+<td>Gerbang S1–S4; D05, D06, D12</td>
+<td>Unit Industri Strategis + DDMF</td>
+</tr>
+<tr>
+<td><strong>N. Kekayaan SDA (baru)</strong></td>
+<td><strong>Hak penerimaan SDA dan cadangan terverifikasi</strong></td>
+<td><strong>NPV bagian negara; rasio cakupan; fiscal capture</strong></td>
+<td><strong>NRF (bukan Danantara)</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Portofolio N sengaja <strong>tidak</strong> ditempatkan di neraca Danantara: hak atas cadangan dan PNBP adalah domain keuangan negara. Danantara menerima alokasi dana dengan kontrak mandat, sehingga pemisahan antara pemilik kekayaan alam dan pengelola investasi tetap jelas.</p>
+<hr />
+<h2 id="5-arsitektur-kelembagaan-danantara-nrf-kementerian-keuangan-bi-dan-ojk">5. Arsitektur kelembagaan: Danantara, NRF, Kementerian Keuangan, BI dan OJK</h2>
+<h3 id="51-tiga-pilihan-penempatan-nrf">5.1 Tiga pilihan penempatan NRF</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Pilihan</th>
+<th>Deskripsi</th>
+<th>Kekuatan</th>
+<th>Kelemahan</th>
+<th>Penilaian</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A. NRF di dalam Danantara</td>
+<td>NRF menjadi arm atau holding di bawah BPI</td>
+<td>Satu pintu investasi; memanfaatkan kapasitas DIM</td>
+<td>Hak atas cadangan dan PNBP bukan kewenangan BPI [D1]; mencampur pemilik dan pengelola; risiko penjaminan oleh Badan</td>
+<td>Tidak disarankan sebagai langkah awal</td>
+</tr>
+<tr>
+<td>B. NRF sebagai badan terpisah di bawah Presiden (D5)</td>
+<td>NRF berdiri sendiri, mengonsolidasikan mineral strategis</td>
+<td>Otoritas tinggi; fokus</td>
+<td>Duplikasi dengan Danantara, Kementerian Keuangan dan ESDM; risiko tata kelola bila tidak tunduk pada disiplin APBN</td>
+<td>Layak bila diatur undang-undang dengan kontrol fiskal yang ketat</td>
+</tr>
+<tr>
+<td>C. NRF sebagai dana negara dengan Danantara sebagai pengelola bermandat</td>
+<td>NRF memegang hak penerimaan (di bawah kerangka keuangan negara); Danantara mengelola alokasi investasi melalui kontrak mandat</td>
+<td>Memisahkan pemilik dan pengelola; konsisten dengan praktik dana kekayaan negara; tidak memerlukan pengalihan hak SDA ke BPI</td>
+<td>Perlu landasan hukum baru dan kontrak mandat yang rinci</td>
+<td><strong>Disarankan</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="52-peta-peran-pilihan-c">5.2 Peta peran (Pilihan C)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Lembaga</th>
+<th>Peran</th>
+<th>Batas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Presiden dan DPR</td>
+<td>Menetapkan landasan hukum NRF, aturan penarikan dan penggunaan dana</td>
+<td>Aturan fiskal (batas penarikan, porsi tabungan) ditetapkan di undang-undang</td>
+</tr>
+<tr>
+<td>Kementerian Keuangan</td>
+<td>Pemilik hak penerimaan SDA; penerbit efek negara (SBN/SBSN) bila instrumen berupa efek negara; pencatatan utang</td>
+<td>Seluruh kewajiban dicatat dalam statistik utang dan risiko fiskal</td>
+</tr>
+<tr>
+<td>Kementerian ESDM</td>
+<td>Penetapan wilayah, izin, produksi; verifikasi laporan cadangan bersama Competent Person</td>
+<td>Tidak menjadi penerbit instrumen</td>
+</tr>
+<tr>
+<td>NRF</td>
+<td>Konsolidasi data cadangan dan penerimaan; register satu cadangan satu klaim; penerbit atau sponsor SPV untuk efek beragun aset</td>
+<td>Tidak mengelola proyek industri secara langsung</td>
+</tr>
+<tr>
+<td>BPI Danantara</td>
+<td>Pengelola investasi bermandat atas alokasi dana NRF; melalui DIM (investasi) dan DDMF (pembangunan)</td>
+<td>Tidak menjaminkan cadangan atau PNBP; tunduk pada gerbang P0–P6 dan scorecard</td>
+</tr>
+<tr>
+<td>Bank Indonesia</td>
+<td>Penyelesaian transaksi (RTGS, kemudian Rupiah digital); stabilitas moneter dan nilai tukar</td>
+<td>Satu-satunya penerbit uang; tidak ada mata uang paralel</td>
+</tr>
+<tr>
+<td>OJK</td>
+<td>Pengawasan efek, penyelenggara aset keuangan digital, perlindungan konsumen</td>
+<td>Prospektus, pengungkapan, kesesuaian investor</td>
+</tr>
+<tr>
+<td>BPK dan auditor independen</td>
+<td>Audit keuangan dan kinerja NRF dan dana kelolaan</td>
+<td>Laporan publik tahunan</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="53-hubungan-dengan-desain-organisasi-danantara">5.3 Hubungan dengan desain organisasi Danantara</h3>
+<p>Unit Industri Strategis dan Pelaksanaan Proyek di tingkat BPI (diposisikan sebagai NITO) [D1, D4] menjadi <strong>pintu masuk proyek</strong> yang meminta pendanaan dari alokasi NRF. Dengan demikian:</p>
+<ul>
+<li>NRF tidak menilai proyek industri sendiri; ia mengandalkan register, gerbang dan scorecard Danantara.</li>
+<li>Danantara tidak menjanjikan agunan SDA; ia mengelola dana berdasarkan kontrak mandat dengan target finansial dan dampak.</li>
+<li>Kontrak mandat memuat: tujuan, kelas aset yang diizinkan, batas risiko, benchmark, porsi minimum untuk platform industri dan DOCK-UP, kewajiban pelaporan, dan hak NRF untuk menarik mandat.</li>
+</ul>
+<hr />
+<h2 id="6-tokenisasi-atau-mata-uang-khusus-penilaian-opsi-instrumen">6. Tokenisasi atau mata uang khusus: penilaian opsi instrumen</h2>
+<h3 id="61-pertanyaan-yang-diajukan">6.1 Pertanyaan yang diajukan</h3>
+<p>Pengguna mengusulkan <strong>tokenisasi atau mata uang alternatif khusus</strong> yang <em>underlying</em>-nya adalah cadangan sumber daya alam Indonesia yang diestimasi resmi oleh badan bersertifikasi internasional. Bab ini menilai lima bentuk instrumen.</p>
+<h3 id="62-lima-opsi">6.2 Lima opsi</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Opsi</th>
+<th>Bentuk</th>
+<th>Penjelasan singkat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Mata uang atau stablecoin berbasis cadangan</td>
+<td>Unit pembayaran yang nilainya dipatok pada cadangan atau komoditas</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Token klaim cadangan in-situ</td>
+<td>Setiap token mewakili klaim atas sejumlah ton cadangan di dalam tanah</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Token efek berbasis penerimaan SDA (TEPSDA)</td>
+<td>Efek negara atau EBA yang membayar kupon/pokok dari royalti dan PNBP, ditokenisasi</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Sukuk negara tokenisasi berbasis aset SDA</td>
+<td>SBSN dengan aset dasar terkait SDA (misalnya hak manfaat atas BMN atau fasilitas), ditokenisasi</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Unit trust cadangan mineral tokenisasi</td>
+<td>Unit penyertaan dalam trust yang memegang hak ekonomi atas bagian negara (opsi 4 D5)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="63-penilaian">6.3 Penilaian</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Kriteria</th>
+<th>1. Mata uang</th>
+<th>2. Klaim tonase</th>
+<th>3. TEPSDA</th>
+<th>4. Sukuk SDA</th>
+<th>5. Unit trust</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kesesuaian hukum saat ini</td>
+<td>Sangat rendah (UU 7/2011; kewenangan BI)</td>
+<td>Rendah (hak SDA dikuasai negara; tidak dapat dialihkan)</td>
+<td>Tinggi bila sebagai SBN/EBA; perlu aturan tokenisasi</td>
+<td>Sedang–tinggi (preseden SBSN berbasis aset)</td>
+<td>Sedang (perlu landasan trust dan hak ekonomi)</td>
+</tr>
+<tr>
+<td>Dasar nilai yang jujur</td>
+<td>Rendah (patokan pada aset tidak likuid)</td>
+<td>Rendah (tonase ≠ nilai; tergantung biaya dan harga)</td>
+<td>Tinggi (arus kas negara yang terukur)</td>
+<td>Tinggi (arus kas sewa/bagi hasil)</td>
+<td>Sedang</td>
+</tr>
+<tr>
+<td>Risiko moneter dan stabilitas</td>
+<td>Sangat tinggi (mata uang paralel, arus modal)</td>
+<td>Sedang</td>
+<td>Rendah</td>
+<td>Rendah</td>
+<td>Rendah–sedang</td>
+</tr>
+<tr>
+<td>Perlakuan fiskal yang transparan</td>
+<td>Rendah</td>
+<td>Rendah</td>
+<td>Tinggi (dicatat sebagai utang)</td>
+<td>Tinggi</td>
+<td>Sedang</td>
+</tr>
+<tr>
+<td>Daya tarik investor</td>
+<td>Tidak pasti; risiko kredibilitas</td>
+<td>Spekulatif</td>
+<td>Tinggi bila berperingkat dan likuid</td>
+<td>Tinggi (investor syariah)</td>
+<td>Sedang</td>
+</tr>
+<tr>
+<td>Inklusi ritel (koperasi)</td>
+<td>Berisiko tinggi</td>
+<td>Berisiko tinggi</td>
+<td>Tinggi melalui seri ritel (seperti SBN ritel)</td>
+<td>Tinggi (sukuk ritel)</td>
+<td>Sedang</td>
+</tr>
+<tr>
+<td><strong>Rekomendasi</strong></td>
+<td><strong>Tidak</strong></td>
+<td><strong>Tidak</strong></td>
+<td><strong>Ya, instrumen utama</strong></td>
+<td><strong>Ya, varian syariah</strong></td>
+<td><strong>Pertimbangkan setelah pilot</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="64-mengapa-bukan-mata-uang">6.4 Mengapa bukan mata uang</h3>
+<ol>
+<li><strong>Hukum.</strong> UU 7/2011 menetapkan Rupiah sebagai satu-satunya alat pembayaran yang sah di wilayah Indonesia dan mewajibkan penggunaan Rupiah untuk transaksi di dalam negeri. Kewenangan penerbitan uang, termasuk Rupiah digital setelah UU P2SK, berada pada Bank Indonesia. Mata uang paralel berbasis cadangan memerlukan perubahan undang-undang yang mendasar.</li>
+<li><strong>Moneter.</strong> Unit pembayaran yang dipatok pada cadangan komoditas akan berfluktuasi mengikuti harga komoditas dan persepsi risiko, menciptakan dualisme moneter, dan dapat memicu dolarisasi atau arus modal yang sulit dikendalikan.</li>
+<li><strong>Likuiditas agunan.</strong> Cadangan di dalam tanah tidak dapat dicairkan untuk menebus unit mata uang dalam waktu singkat; janji penebusan tidak kredibel.</li>
+<li><strong>Preseden.</strong> Token negara berbasis cadangan minyak (Petro, Venezuela, 2018) gagal membangun kepercayaan pasar dan akhirnya dihentikan. Kegagalan utamanya adalah kredibilitas: tidak ada mekanisme penebusan, verifikasi cadangan atau tata kelola yang dapat diuji.</li>
+</ol>
+<h3 id="65-mengapa-token-klaim-tonase-juga-tidak-disarankan">6.5 Mengapa token klaim tonase juga tidak disarankan</h3>
+<ul>
+<li>Hak atas SDA dikuasai negara; mengalihkan klaim atas tonase kepada pemegang token berpotensi bertentangan dengan Pasal 33 dan rezim perizinan Minerba.</li>
+<li>Tonase bukan nilai: nilai ekonomi bergantung pada biaya penambangan, harga, kualitas, logistik, fiskal dan waktu.</li>
+<li>Klaim tonase mendorong spekulasi dan sulit diatur sebagai efek maupun komoditas.</li>
+</ul>
+<h3 id="66-desain-yang-direkomendasikan-tepsda">6.6 Desain yang direkomendasikan: TEPSDA</h3>
+<p><strong>Token Efek Berbasis Penerimaan SDA (TEPSDA)</strong> adalah efek yang:</p>
+<ul>
+<li>diterbitkan oleh <strong>Pemerintah (SBN/SBSN)</strong> atau oleh <strong>SPV NRF</strong> sebagai efek beragun aset dengan aset dasar berupa <strong>hak atas sebagian arus kas penerimaan negara</strong> dari wilayah tambang tertentu yang cadangannya telah dilaporkan Competent Person;</li>
+<li>dicatat sebagai <strong>token di jaringan buku besar terdistribusi berizin</strong> (permissioned DLT) yang dioperasikan atau diawasi lembaga resmi, dengan register kepemilikan yang setara dengan sistem pencatatan efek;</li>
+<li><strong>diselesaikan dalam Rupiah</strong> melalui sistem pembayaran BI, dan kelak dengan Rupiah digital (<em>delivery versus payment</em>);</li>
+<li>membayar <strong>kupon dan pokok dari arus kas aktual</strong> melalui <em>waterfall</em> yang terprogram, dengan cadangan likuiditas dan rasio cakupan minimum;</li>
+<li>menerbitkan <strong>seri ritel</strong> (dengan batas pembelian dan edukasi investor) yang dapat didistribusikan melalui kanal yang diawasi, termasuk koperasi yang memenuhi syarat sebagai agen penjual;</li>
+<li>mengungkapkan secara berkala <strong>laporan cadangan, produksi, penerimaan dan cakupan</strong> yang dapat diverifikasi (<em>proof of reserve and revenue</em>).</li>
+</ul>
+<p>Varian syariah (<strong>Sukuk TEPSDA</strong>) memakai struktur SBSN yang sudah dikenal, dengan aset dasar yang sesuai syariah dan opini Dewan Syariah Nasional.</p>
+<hr />
+<h2 id="7-dasar-cadangan-dan-valuasi-dari-tonase-ke-arus-kas-negara">7. Dasar cadangan dan valuasi: dari tonase ke arus kas negara</h2>
+<h3 id="71-standar-pelaporan-cadangan">7.1 Standar pelaporan cadangan</h3>
+<p>Keluarga standar <strong>CRIRSCO</strong> (Committee for Mineral Reserves International Reporting Standards) menyelaraskan kode pelaporan nasional, antara lain <strong>JORC</strong> (Australasia), <strong>NI 43-101/CIM</strong> (Kanada), <strong>SAMREC</strong> (Afrika Selatan), <strong>PERC</strong> (Eropa) dan <strong>KCMI</strong> (Indonesia, Komite Cadangan Mineral Indonesia). Di bawah kode-kode tersebut:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Kategori</th>
+<th>Arti</th>
+<th>Layak sebagai dasar pembiayaan?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sumber daya tereka (<em>inferred resource</em>)</td>
+<td>Keyakinan geologi rendah</td>
+<td>Tidak</td>
+</tr>
+<tr>
+<td>Sumber daya tertunjuk (<em>indicated resource</em>)</td>
+<td>Keyakinan sedang; belum diuji ekonomi</td>
+<td>Tidak</td>
+</tr>
+<tr>
+<td>Sumber daya terukur (<em>measured resource</em>)</td>
+<td>Keyakinan tinggi; belum diuji ekonomi</td>
+<td>Tidak secara langsung</td>
+</tr>
+<tr>
+<td>Cadangan terkira (<em>probable reserve</em>)</td>
+<td>Bagian ekonomis dari sumber daya tertunjuk/terukur setelah faktor pengubah</td>
+<td>Ya, dengan haircut lebih besar</td>
+</tr>
+<tr>
+<td>Cadangan terbukti (<em>proved reserve</em>)</td>
+<td>Bagian ekonomis dari sumber daya terukur</td>
+<td>Ya</td>
+</tr>
+</tbody>
+</table></div>
+<p>Laporan harus ditandatangani <strong>Competent Person</strong> (di Indonesia, Competent Person Indonesia/CPI) yang memenuhi syarat dan independen. Faktor pengubah (<em>modifying factors</em>) mencakup penambangan, pengolahan, metalurgi, infrastruktur, ekonomi, pemasaran, hukum, lingkungan, sosial dan pemerintahan. Sebagai pelengkap, <strong>UNFC</strong> (United Nations Framework Classification for Resources) berguna untuk menyandingkan aspek sosial-lingkungan dan kelayakan proyek.</p>
+<blockquote>
+<p><strong>Implikasi:</strong> "estimasi resmi oleh badan bersertifikasi internasional" sebaiknya diterjemahkan sebagai <strong>laporan cadangan sesuai KCMI/CRIRSCO oleh Competent Person independen, diverifikasi pihak ketiga, dan dipadukan dengan valuasi independen</strong>. Kode CRIRSCO mengatur pelaporan estimasi, bukan valuasi keuangan; valuasi memerlukan standar valuasi aset mineral tersendiri (misalnya kerangka sejenis VALMIN atau CIMVAL).</p>
+</blockquote>
+<h3 id="72-dari-cadangan-ke-nilai-yang-dapat-dibiayai">7.2 Dari cadangan ke nilai yang dapat dibiayai</h3>
+<p>Urutan valuasi yang disarankan:</p>
+<ol>
+<li><strong>Cadangan terbukti dan terkira</strong> per wilayah (KCMI/CRIRSCO).</li>
+<li><strong>Profil produksi</strong> realistis sesuai izin, kapasitas dan pasar.</li>
+<li><strong>Harga</strong> berdasarkan <em>price deck</em> konservatif (bukan harga puncak), dengan skenario transisi energi.</li>
+<li><strong>Bagian negara</strong> (royalti, PNBP, pajak, dividen BUMN) per ton, sesuai rezim fiskal yang berlaku.</li>
+<li><strong>Nilai kini</strong> bagian negara dengan tingkat diskonto yang mencerminkan risiko.</li>
+<li><strong>Haircut</strong> untuk risiko harga, produksi, hukum/perizinan, sosial-lingkungan, dan transisi.</li>
+<li><strong>Rasio cakupan</strong> minimum (misalnya 1,5–2,0×) antara nilai kini setelah haircut dan nilai efek beredar.</li>
+</ol>
+<h3 id="73-ilustrasi-mengapa-nilai-in-situ-menyesatkan">7.3 Ilustrasi: mengapa nilai in-situ menyesatkan</h3>
+<blockquote>
+<p><strong>Ilustrasi hipotetis (kelas D), bukan estimasi wilayah mana pun.</strong> Asumsi: cadangan terbukti 1.000 juta ton; harga USD80/ton; produksi 50 juta ton/tahun selama 20 tahun; bagian negara efektif 15% dari nilai penjualan; tingkat diskonto 8%; rasio cakupan 1,5×.</p>
+</blockquote>
+<figure class="chart"><svg viewBox="0 0 680 268" role="img" aria-label="Ilustrasi: dari nilai in-situ ke kapasitas penerbitan (USD miliar)" xmlns="http://www.w3.org/2000/svg"><text x="0" y="20" font-size="15" font-weight="700" fill="#00338D">Ilustrasi: dari nilai in-situ ke kapasitas penerbitan (USD miliar)</text><text x="0" y="66" font-size="13" fill="#333">Nilai in-situ (kapitalisasi)</text><rect x="230" y="50" width="340.0" height="26" rx="3" fill="#C9D3E3"/><text x="578.0" y="68" font-size="13" font-weight="700" fill="#00338D">80,0</text><text x="0" y="112" font-size="13" fill="#333">Nilai kini bagian negara</text><rect x="230" y="96" width="25.0" height="26" rx="3" fill="#005EB8"/><text x="263.0" y="114" font-size="13" font-weight="700" fill="#00338D">5,89 (7,4%)</text><text x="0" y="158" font-size="13" fill="#333">Kapasitas penerbitan (cakupan 1,5×)</text><rect x="230" y="142" width="16.7" height="26" rx="3" fill="#00338D"/><text x="254.7" y="160" font-size="13" font-weight="700" fill="#00338D">3,93 (4,9%)</text><text x="0" y="204" font-size="13" fill="#333">Kapasitas, skenario transisi</text><rect x="230" y="188" width="14.1" height="26" rx="3" fill="#7FB2E5"/><text x="252.1" y="206" font-size="13" font-weight="700" fill="#00338D">3,31</text><text x="0" y="260" font-size="11" fill="#666">Kelas D: angka hipotetis untuk menunjukkan metode, bukan estimasi wilayah mana pun.</text></svg></figure>
+
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Langkah</th>
+<th>Perhitungan</th>
+<th>Hasil</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nilai in-situ "kapitalisasi"</td>
+<td>1.000 juta ton × USD80</td>
+<td><strong>USD80,0 miliar</strong></td>
+</tr>
+<tr>
+<td>Bagian negara per tahun</td>
+<td>50 juta ton × USD80 × 15%</td>
+<td>USD0,6 miliar/tahun</td>
+</tr>
+<tr>
+<td>Nilai kini bagian negara (20 tahun, 8%)</td>
+<td>USD0,6 miliar × faktor anuitas 9,818</td>
+<td><strong>USD5,89 miliar</strong> (7,4% dari nilai in-situ)</td>
+</tr>
+<tr>
+<td>Kapasitas penerbitan maksimum (cakupan 1,5×)</td>
+<td>USD5,89 miliar ÷ 1,5</td>
+<td><strong>USD3,93 miliar</strong> (4,9% dari nilai in-situ)</td>
+</tr>
+<tr>
+<td>Skenario transisi (produksi turun 50% pada tahun 11–20)</td>
+<td>Nilai kini tahun 11–20 (USD1,87 miliar) dipotong setengah</td>
+<td>Nilai kini USD4,96 miliar (−16%); kapasitas penerbitan USD3,31 miliar</td>
+</tr>
+</tbody>
+</table></div>
+<p>Pelajaran ilustrasi ini: nilai yang dapat dibiayai secara jujur mungkin <strong>hanya sebagian kecil</strong> dari angka kapitalisasi in-situ. Karena itu klaim "kapitalisasi batubara Rp10.000 triliun" [D5] perlu diterjemahkan ulang menjadi nilai kini bagian negara sebelum dijadikan dasar target fiskal Rp100 triliun atau Rp1.000 triliun.</p>
+<h3 id="74-aturan-valuasi-yang-diusulkan">7.4 Aturan valuasi yang diusulkan</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Aturan</th>
+<th>Isi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kategori yang diakui</td>
+<td>Hanya cadangan terbukti (100% dari nilai setelah haircut) dan terkira (maksimal 50–70%, ditetapkan kebijakan)</td>
+</tr>
+<tr>
+<td>Independensi</td>
+<td>Competent Person dan valuator tidak terafiliasi dengan penerbit, pembeli, atau pemegang izin</td>
+</tr>
+<tr>
+<td>Re-estimasi</td>
+<td>Tahunan, dan setiap perubahan material (harga, izin, kecelakaan, regulasi)</td>
+</tr>
+<tr>
+<td>Uji kecukupan</td>
+<td>Rasio cakupan diuji setiap kuartal; di bawah ambang memicu penghentian penerbitan baru dan penambahan cadangan likuiditas</td>
+</tr>
+<tr>
+<td>Transisi energi</td>
+<td>Batubara diberi haircut tambahan dan tenor lebih pendek; mineral transisi (nikel, bauksit, tembaga) diuji terhadap skenario harga rendah</td>
+</tr>
+<tr>
+<td>Larangan</td>
+<td>Sumber daya tereka atau tertunjuk; wilayah yang sedang sengketa; cadangan yang sudah menjadi agunan instrumen lain</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="8-arsitektur-teknologi-tokenisasi">8. Arsitektur teknologi tokenisasi</h2>
+<h3 id="81-prinsip-desain">8.1 Prinsip desain</h3>
+<ul>
+<li><strong>Berizin, bukan publik terbuka.</strong> Partisipan (penerbit, kustodian, agen, investor terverifikasi) diketahui dan diawasi.</li>
+<li><strong>Kepastian hukum di atas teknologi.</strong> Token adalah representasi pencatatan efek; hak hukum diatur prospektus dan peraturan, bukan oleh kode semata.</li>
+<li><strong>Interoperabilitas.</strong> Terhubung dengan sistem pencatatan efek nasional, sistem pembayaran BI, dan kelak Rupiah digital.</li>
+<li><strong>Keterbukaan data.</strong> Data cadangan, produksi, penerimaan dan cakupan dipublikasikan dan dapat diaudit.</li>
+</ul>
+<h3 id="82-lapisan-arsitektur">8.2 Lapisan arsitektur</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Lapisan</th>
+<th>Komponen</th>
+<th>Fungsi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data sumber</td>
+<td>Laporan Competent Person (KCMI), data produksi ESDM, data penerimaan Kementerian Keuangan, data ekspor</td>
+<td>Fakta dasar yang diverifikasi</td>
+</tr>
+<tr>
+<td>Register cadangan</td>
+<td>Register "satu cadangan, satu klaim" milik NRF dengan ID wilayah dan versi laporan</td>
+<td>Mencegah penjaminan ganda; jejak audit</td>
+</tr>
+<tr>
+<td>Oracle terverifikasi</td>
+<td>Penyedia data resmi menandatangani data secara digital</td>
+<td>Menghubungkan data dunia nyata ke kontrak pintar</td>
+</tr>
+<tr>
+<td>Buku besar berizin</td>
+<td>Penerbitan, pencatatan kepemilikan, transfer, penebusan</td>
+<td>Register token yang setara pencatatan efek</td>
+</tr>
+<tr>
+<td>Kontrak pintar <em>waterfall</em></td>
+<td>Penerimaan masuk → cadangan likuiditas → kupon → pokok → sisa ke NRF</td>
+<td>Pembayaran otomatis dan transparan</td>
+</tr>
+<tr>
+<td>Penyelesaian</td>
+<td>DvP dengan Rupiah (RTGS/BI-FAST) dan kelak Rupiah digital</td>
+<td>Tidak ada mata uang paralel</td>
+</tr>
+<tr>
+<td>Kustodian dan identitas</td>
+<td>KYC/AML, dompet kustodian berizin, pemulihan kunci</td>
+<td>Perlindungan investor dan kepatuhan</td>
+</tr>
+<tr>
+<td>Pengungkapan</td>
+<td>Portal publik: cadangan, produksi, penerimaan, cakupan, transaksi agregat</td>
+<td>Kepercayaan dan disiplin pasar</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="83-pengaman-teknologi">8.3 Pengaman teknologi</h3>
+<ul>
+<li>Audit kode kontrak pintar oleh pihak independen sebelum peluncuran dan setiap perubahan.</li>
+<li>Mekanisme <em>pause</em> dan pemulihan yang diatur hukum, dengan otorisasi berlapis.</li>
+<li>Keamanan siber setara infrastruktur pasar keuangan; uji penetrasi berkala.</li>
+<li>Pemisahan peran operator jaringan, penerbit, kustodian dan agen pembayaran.</li>
+</ul>
+<hr />
+<h2 id="9-penggunaan-dana-menghubungkan-nrf-dengan-platform-industri">9. Penggunaan dana: menghubungkan NRF dengan platform industri</h2>
+<h3 id="91-aturan-alokasi-yang-diusulkan">9.1 Aturan alokasi yang diusulkan</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Porsi</th>
+<th>Tujuan</th>
+<th>Pengelola</th>
+<th>Aturan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tabungan antargenerasi</td>
+<td>Mengganti kekayaan yang tidak terbarukan dengan aset keuangan</td>
+<td>DIM (mandat NRF)</td>
+<td>Porsi minimum ditetapkan undang-undang; investasi global terdiversifikasi</td>
+</tr>
+<tr>
+<td>Stabilisasi</td>
+<td>Penyangga saat harga komoditas turun</td>
+<td>NRF / Kementerian Keuangan</td>
+<td>Aturan penarikan berbasis harga acuan</td>
+</tr>
+<tr>
+<td>Investasi produktif domestik</td>
+<td>Hilirisasi, platform industri, infrastruktur strategis</td>
+<td>DDMF/DIM melalui unit Industri Strategis</td>
+<td>Hanya proyek lolos P0–P6 dengan kasus finansial dan ekonomi</td>
+</tr>
+<tr>
+<td>Pengembangan pemasok</td>
+<td>DOCK-UP: hibah pendamping, fasilitas bersama, penjaminan kerugian pertama</td>
+<td>Unit Industri Strategis + DDMF</td>
+<td>Dana dilepas per gerbang S1–S4</td>
+</tr>
+<tr>
+<td>Distribusi manfaat</td>
+<td>Program yang disepakati (misalnya melalui koperasi)</td>
+<td>Kementerian/lembaga terkait</td>
+<td>Dianggarkan eksplisit; tidak dibiayai dari utang TEPSDA</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="92-prioritas-hilirisasi-yang-membangun-kapabilitas">9.2 Prioritas: hilirisasi yang membangun kapabilitas</h3>
+<p>Dana berbasis SDA paling tepat dipakai untuk <strong>mengubah sumber daya menjadi kapabilitas</strong>: dari ekspor bahan mentah ke pengolahan bernilai tambah, lalu ke komponen dan manufaktur. Setiap proyek hilirisasi yang didanai harus:</p>
+<ol>
+<li>Lolos <strong>P2</strong> dengan bukti kesiapan teknis, pasar dan lingkungan.</li>
+<li>Menyertakan <strong>rencana lokalisasi</strong> dan target gerbang S untuk kelompok komponen pemasok (Bab 14.3).</li>
+<li>Melaporkan <strong>nilai tambah domestik tambahan (D02)</strong>, <strong>pangsa nilai tambah domestik (D05)</strong> dan <strong>milestone teknologi (D06)</strong> terhadap kontrafaktual.</li>
+<li>Diuji terhadap skenario harga rendah dan transisi (Bab 12).</li>
+</ol>
+<h3 id="93-larangan-penggunaan">9.3 Larangan penggunaan</h3>
+<ul>
+<li>Membayar belanja rutin atau subsidi berulang dari hasil penerbitan TEPSDA.</li>
+<li>Menutup kerugian BUMN tanpa rencana pemulihan yang disetujui (Bab 14.4).</li>
+<li>Membiayai proyek yang belum memiliki register, sponsor dan pemimpin proyek.</li>
+<li>Menjaminkan kembali hasil investasi yang sudah dibiayai TEPSDA.</li>
+</ul>
+<hr />
+<h2 id="10-tokenisasi-proyek-berdaulat-instrumen-pembiayaan-untuk-mengurangi-pinjaman-luar-negeri">10. Tokenisasi proyek berdaulat: instrumen pembiayaan untuk mengurangi pinjaman luar negeri</h2>
+<h3 id="101-masalah-industri-strategis-dibiayai-dengan-valas-dari-luar-negeri">10.1 Masalah: industri strategis dibiayai dengan valas dari luar negeri</h3>
+<p>Proyek industri strategis, terutama di sektor pertahanan, perkapalan, perkeretaapian, energi dan hilirisasi, lazim dibiayai dengan <strong>pinjaman luar negeri</strong> (PLN): kredit ekspor yang terikat pada pemasok asing, pinjaman sindikasi komersial, atau pinjaman bilateral. Pola ini menimbulkan empat kerugian struktural:</p>
+<ol>
+<li><strong>Risiko nilai tukar</strong> menumpuk pada APBN dan BUMN, karena kewajiban dalam valas sedangkan penerimaan dalam Rupiah.</li>
+<li><strong>Pengadaan terikat</strong> (<em>tied procurement</em>) mengunci porsi besar belanja pada pemasok negara pemberi pinjaman, sehingga melemahkan pembangunan pemasok dalam negeri (DOCK-UP, Bab 14.3).</li>
+<li><strong>Arus keluar devisa</strong> berlangsung dua kali: saat impor komponen dan saat pembayaran pokok serta bunga.</li>
+<li><strong>Tabungan domestik tidak terhubung</strong> dengan kebutuhan pembiayaan industri. Dana Danantara, bank BUMN, asuransi, dana pensiun dan Devisa Hasil Ekspor SDA yang wajib ditahan di dalam negeri belum memiliki saluran yang aman dan transparan ke proyek industri.</li>
+</ol>
+<p>Kajian ini mengusulkan <strong>Token Proyek Berdaulat (TPB)</strong>: efek yang ditokenisasi dan beragun <strong>arus kas proyek atau tagihan kontrak pemerintah yang sudah mengikat</strong>. TPB dirancang sebagai saluran yang memindahkan pembiayaan industri strategis dari kreditur luar negeri ke investor domestik. TPB melengkapi TEPSDA (Bab 6). TEPSDA menghimpun dana dari penerimaan SDA, sedangkan TPB menyalurkan dana ke proyek dengan pelepasan berbasis bukti fisik.</p>
+<h3 id="102-sumber-d6-palcapital-pt-pal-indonesia">10.2 Sumber D6: PALCapital (PT PAL Indonesia)</h3>
+<p>D6 adalah dek usulan <em>PALCapital: Sovereign Maritime Tokenization Engine (Rev B)</em> dari PT PAL Indonesia yang ditujukan kepada Danantara dan Kementerian Pertahanan. Dokumen ini adalah contoh konkret pertama tokenisasi proyek berdaulat dalam lingkup Danantara. Seluruh angkanya diperlakukan sebagai <strong>kelas C</strong>.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Unsur</th>
+<th>Isi D6</th>
+<th>Kelas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Masalah</td>
+<td>Backlog kontrak yang dijamin Kemhan (2 kapal selam Scorpène Evolved USD2,16 miliar; 2 fregat Merah Putih USD1,2 miliar; LPD dan kapal rumah sakit) dengan siklus 60–96 bulan; bahan baku harus dibayar sebelum termin sehingga timbul kesenjangan modal kerja USD150–300 juta per program; sekitar 75% material diimpor</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Pembanding</td>
+<td>Sindikasi bank: 180–270 hari, 9–11% all-in ditambah biaya 2–3%, kovenan dan agunan</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Instrumen</td>
+<td><strong>PAL-SUB-1</strong>: surat utang berimbal hasil yang ditokenisasi, beragun purchase order Kemhan yang diverifikasi; USD150 juta, 700 bps, tenor 720 hari; token dimusnahkan (<em>burn</em>) saat pelunasan</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Investor</td>
+<td>Danantara sebagai investor jangkar; Mandiri, BRI dan dana negara sebagai ko-investor; fase 1 hanya 100 dompet institusi yang terdaftar</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Pelepasan dana</td>
+<td>Escrow kontrak pintar dan escrow fiat di Bank Mandiri Custody (akta tripartit PAL–Danantara–Mandiri). Dana dilepas per milestone (T1 potong baja USD40 juta, T2 peletakan lunas USD45 juta, T3 peluncuran USD40 juta, T4 uji laut USD25 juta) setelah tanda tangan ganda surveyor BKI dan perwira TNI AL, dengan foto bergeotag dan IoT sebagai bukti pendukung. Pembayaran <strong>langsung ke pemasok</strong> (misalnya Krakatau Steel), tidak melalui rekening operasional PAL</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Pelunasan</td>
+<td>Seluruh termin Kemhan (uang muka 15% dan T1–T5) masuk ke rekening penampungan (<em>collection account</em>) Mandiri. Air terjun pembayaran: imbal hasil investor lebih dahulu, sisa ke kas PAL; pokok dilunasi saat serah terima akhir</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Teknologi</td>
+<td>Jaringan berizin Hyperledger Besu (IBFT 2.0) dengan 4 validator (PAL ×2, Danantara, BKI; 3 dari 4 untuk finalisasi), standar token ERC-3643 (kepatuhan di tingkat token), ZK-SNARK agar spesifikasi rahasia tidak masuk rantai, cloud berdaulat sesuai BSSN, HSM FIPS 140-2 L3, node auditor baca-saja untuk Kemhan dan OJK</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Regulasi</td>
+<td>Diajukan sebagai pilot sandbox Inovasi Keuangan Digital (IKD) OJK; penyelesaian Rupiah digital dan <em>stablecoin</em> USD teregulasi; tanpa investor ritel sampai fase 3</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Klaim manfaat</td>
+<td>Waktu pendanaan 270 → 7–14 hari; biaya 10,5% → 7%; penghematan USD8–12 juta per kapal; <em>throughput</em> galangan +40%</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Peta jalan</td>
+<td>Fase 1 (Q4 2026) USD150 juta, Scorpène unit 1; fase 2 USD300 juta, fregat dan kapal selam unit 2, 10 ribu investor; fase 3 USD1 miliar lebih, ritel, perdagangan sekunder</td>
+<td>C</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="103-penilaian-d6-kuat-pada-mekanisme-perlu-koreksi-pada-struktur">10.3 Penilaian D6: kuat pada mekanisme, perlu koreksi pada struktur</h3>
+<p><strong>Kekuatan yang patut dijadikan standar.</strong> D6 memuat empat unsur yang sejalan dengan disiplin kajian ini:</p>
+<ol>
+<li><strong>Pelepasan dana berbasis bukti fisik</strong> oleh pihak independen (BKI) langsung ke pemasok. Unsur ini setara dengan gerbang P4–P5 pada tingkat milestone dan mencegah penyalahgunaan dana.</li>
+<li><strong>Rekening penampungan dan air terjun pembayaran</strong> yang memisahkan arus kas pelunasan dari kas operasional penerbit.</li>
+<li><strong>Jaringan berizin, kepatuhan di tingkat token, dan node regulator sejak awal</strong>, konsisten dengan arsitektur Bab 8.</li>
+<li><strong>Peningkatan bertahap yang digerbangi regulator</strong>, tanpa ritel sebelum pilot institusional berhasil, konsisten dengan Bab 16.2.</li>
+</ol>
+<p><strong>Koreksi yang diperlukan sebelum menjadi instrumen pengurang PLN:</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Isu dalam D6</th>
+<th>Mengapa penting</th>
+<th>Koreksi yang diusulkan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Dibingkai "bukan utang" tetapi instrumennya <em>debt note</em> berimbal hasil tetap</td>
+<td>Sama dengan koreksi D1 atas monetisasi "non-utang" (Bab 14.6 isu 8)</td>
+<td>Catat sebagai kewajiban PAL. Bila ada dukungan Kemhan atau Kemenkeu, catat sebagai kewajiban kontinjensi negara</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Denominasi USD dan penyelesaian <em>stablecoin</em> USD</td>
+<td>Tidak mengurangi risiko valas. Penyelesaian <em>stablecoin</em> bertentangan dengan arah Rupiah sebagai alat pembayaran sah (Bab 6.4)</td>
+<td><strong>Denominasi Rupiah</strong>, penyelesaian RTGS lalu Rupiah digital. Porsi valas hanya untuk impor yang belum dapat dilokalkan dan dibiayai dari sumber valas domestik</td>
+</tr>
+<tr>
+<td>3</td>
+<td>"Agunan" berupa purchase order Kemhan</td>
+<td>Hak tagih atas pembayaran APBN memerlukan persetujuan pengalihan, ketersediaan pagu kontrak tahun jamak, dan perlindungan dari perubahan atau pemutusan kontrak</td>
+<td>Opini hukum tentang pengalihan hak tagih atau <em>true sale</em>; persetujuan Kemhan dan Kemenkeu; klausul pembayaran ke rekening penampungan yang tidak dapat dicabut sepihak</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Investor disebut "kreditur terjamin" sekaligus "tanpa agunan"</td>
+<td>Kedudukan hukum yang tidak jelas melemahkan penetapan harga dan peringkat</td>
+<td>Struktur SPV atau EBA dengan jaminan fidusia atas hak tagih, dinilai oleh lembaga pemeringkat domestik</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Imbal hasil 7% dalam USD untuk risiko yang pada akhirnya adalah risiko Kemhan</td>
+<td>Bila risiko akhirnya negara, premi di atas kurva SBN adalah biaya tambahan bagi negara</td>
+<td>Patok harga terhadap kurva SBN atau SBSN Rupiah tenor setara ditambah premi pelaksanaan yang dijelaskan</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Danantara sekaligus investor jangkar, validator dan penentu bank escrow</td>
+<td>Konflik peran (Bab 5.2)</td>
+<td>Pisahkan peran: DIM sebagai investor, pihak independen sebagai validator, OJK sebagai pengawas</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Fase 3: ritel, bursa STO angkatan laut pertama di dunia, L2 publik hibrida</td>
+<td>Aset pertahanan dan investor ritel adalah kombinasi berisiko tinggi</td>
+<td>Ritel hanya melalui SBN/SBSN ritel yang ditokenisasi setelah pilot institusional dan evaluasi independen</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Proyeksi pasar RWA (USD18,9 T pada 2033), <em>throughput</em> +40%, penghematan USD8–12 juta per kapal</td>
+<td>Klaim kelas C tanpa model</td>
+<td>Diverifikasi pada pilot. Tidak dipakai sebagai dasar keputusan</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Kesimpulan penilaian:</strong> mekanisme D6 (escrow per milestone, verifikasi independen, rekening penampungan) layak dijadikan <strong>cetak biru TPB</strong>. Struktur keuangannya perlu diubah dari pinjaman USD berimbal hasil tinggi menjadi <strong>efek Rupiah yang dipatok pada kurva negara</strong>. Hanya dengan begitu instrumen ini benar-benar mengurangi PLN, bukan sekadar memindahkan utang valas dari bank ke pemegang token.</p>
+<h3 id="104-bagaimana-tpb-mengurangi-pinjaman-luar-negeri">10.4 Bagaimana TPB mengurangi pinjaman luar negeri</h3>
+<p>Tokenisasi tidak menciptakan tabungan baru. TPB mengurangi PLN melalui <strong>tiga tuas</strong> yang harus dijalankan bersama:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Tuas</th>
+<th>Mekanisme</th>
+<th>Prasyarat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Substitusi pendanaan</td>
+<td>Porsi Rupiah proyek (upah, konten lokal, modal kerja) dibiayai investor domestik melalui TPB, bukan kredit ekspor atau sindikasi luar negeri</td>
+<td>Kurva harga TPB terpatok SBN; basis investor institusi (DIM, bank, asuransi, dana pensiun)</td>
+</tr>
+<tr>
+<td>2. Lokalisasi</td>
+<td>Escrow per milestone memprioritaskan pembayaran ke pemasok dalam negeri yang lolos gerbang S1–S4 (DOCK-UP), sehingga porsi impor dan kebutuhan valas menurun dari program ke program</td>
+<td>Peta komponen per program; target TKDN per milestone</td>
+</tr>
+<tr>
+<td>3. Valas domestik</td>
+<td>Porsi impor yang belum dapat dilokalkan dibiayai dari valas yang sudah berada di sistem keuangan domestik: Devisa Hasil Ekspor SDA yang wajib ditahan di dalam negeri, penerimaan valas NRF, dan likuiditas valas bank BUMN</td>
+<td>Koordinasi BI; lindung nilai; batas per seri</td>
+</tr>
+</tbody>
+</table></div>
+<figure class="chart"><svg viewBox="0 0 680 268" role="img" aria-label="Ilustrasi: kebutuhan pinjaman luar negeri satu program (USD miliar)" xmlns="http://www.w3.org/2000/svg"><text x="0" y="20" font-size="15" font-weight="700" fill="#00338D">Ilustrasi: kebutuhan pinjaman luar negeri satu program (USD miliar)</text><text x="0" y="66" font-size="13" fill="#333">0. Pola lama (PLN penuh)</text><rect x="230" y="50" width="340.0" height="26" rx="3" fill="#C9D3E3"/><text x="578.0" y="68" font-size="13" font-weight="700" fill="#00338D">2,16 (100%)</text><text x="0" y="112" font-size="13" fill="#333">1. Substitusi porsi Rupiah</text><rect x="230" y="96" width="255.0" height="26" rx="3" fill="#7FB2E5"/><text x="493.0" y="114" font-size="13" font-weight="700" fill="#00338D">1,62 (75%)</text><text x="0" y="158" font-size="13" fill="#333">2. + Lokalisasi DOCK-UP</text><rect x="230" y="142" width="204.6" height="26" rx="3" fill="#005EB8"/><text x="442.6" y="160" font-size="13" font-weight="700" fill="#00338D">1,30 (60%)</text><text x="0" y="204" font-size="13" fill="#333">3. + Valas domestik</text><rect x="230" y="188" width="102.3" height="26" rx="3" fill="#00338D"/><text x="340.3" y="206" font-size="13" font-weight="700" fill="#00338D">0,65 (30%)</text><text x="0" y="260" font-size="11" fill="#666">Kelas D: nilai kontrak dan porsi impor dari D6 (kelas C) dipakai hanya untuk menunjukkan metode.</text></svg></figure>
+
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Skenario (ilustrasi, kelas D)</th>
+<th>Asumsi</th>
+<th>Kebutuhan PLN</th>
+<th>Porsi dari nilai program</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0. Pola lama</td>
+<td>Seluruh program USD2,16 miliar dibiayai kredit ekspor dan sindikasi luar negeri</td>
+<td>USD2,16 miliar</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>1. Substitusi</td>
+<td>Porsi Rupiah (25% konten lokal) dan modal kerja dibiayai TPB</td>
+<td>USD1,62 miliar</td>
+<td>75%</td>
+</tr>
+<tr>
+<td>2. + Lokalisasi</td>
+<td>Konten lokal naik ke 40% melalui DOCK-UP</td>
+<td>USD1,30 miliar</td>
+<td>60%</td>
+</tr>
+<tr>
+<td>3. + Valas domestik</td>
+<td>Separuh porsi impor dibiayai dari valas domestik (DHE SDA, NRF, bank BUMN)</td>
+<td>USD0,65 miliar</td>
+<td>30%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ilustrasi memakai nilai kontrak kapal selam D6 dan porsi impor 75% dari D6 hanya untuk menunjukkan metode. Angka ini bukan rencana pembiayaan program tersebut. Skenario 3 tetap mengandung risiko valas, tetapi kewajibannya kepada kreditur domestik dan tidak menambah PLN.</p>
+<h3 id="105-desain-tpb-yang-direkomendasikan">10.5 Desain TPB yang direkomendasikan</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Unsur</th>
+<th>Rancangan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bentuk hukum</td>
+<td>EBA atau surat utang SPV proyek yang ditokenisasi. Untuk proyek yang dibiayai APBN, alternatifnya <strong>SBSN berbasis proyek</strong> yang ditokenisasi, sehingga memperluas praktik pembiayaan proyek melalui sukuk negara yang sudah ada</td>
+</tr>
+<tr>
+<td>Aset dasar</td>
+<td>Tagihan kontrak pemerintah yang sudah mengikat dan dialokasikan dalam pagu tahun jamak, atau arus kas proyek yang sudah beroperasi (tarif, PPA, sewa). <strong>Bukan</strong> proyeksi penjualan yang belum dikontrak</td>
+</tr>
+<tr>
+<td>Denominasi dan penyelesaian</td>
+<td>Rupiah melalui RTGS, kemudian Rupiah digital BI. Tidak memakai <em>stablecoin</em></td>
+</tr>
+<tr>
+<td>Harga</td>
+<td>Kurva SBN/SBSN tenor setara ditambah premi pelaksanaan yang diungkapkan; diperingkat lembaga pemeringkat domestik</td>
+</tr>
+<tr>
+<td>Pelepasan dana</td>
+<td>Per milestone fisik yang diverifikasi pihak independen (klasifikasi, surveyor, insinyur pemilik), langsung ke rekening pemasok</td>
+</tr>
+<tr>
+<td>Pelunasan</td>
+<td>Rekening penampungan di bank kustodian yang ditetapkan bersama; air terjun pembayaran ditulis dalam kontrak dan kode</td>
+</tr>
+<tr>
+<td>Investor</td>
+<td>Fase awal hanya institusi domestik. DIM sebagai jangkar paling banyak 30% per seri agar harga ditentukan pasar. Ritel hanya melalui jalur SBN ritel</td>
+</tr>
+<tr>
+<td>Kerahasiaan</td>
+<td>Bukti nilai tanpa membuka spesifikasi (misalnya ZK proof) untuk program pertahanan; klasifikasi data oleh Kemhan dan BSSN</td>
+</tr>
+<tr>
+<td>Kaitan dengan TEPSDA</td>
+<td>Hasil TEPSDA yang dialokasikan ke investasi produktif (Bab 9.1) dapat menjadi investor jangkar atau tranche kerugian pertama TPB, tetapi <strong>satu aset satu klaim</strong>: tagihan yang menjadi agunan TPB tidak boleh dijaminkan ulang</td>
+</tr>
+<tr>
+<td>Kaitan dengan gerbang</td>
+<td>Penerbitan TPB hanya untuk proyek yang lolos <strong>P3</strong>. Pelepasan per milestone setara P4–P5. Porsi pemasok dalam negeri dilepas per gerbang <strong>S1–S4</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="106-sektor-sasaran-di-luar-perkapalan">10.6 Sektor sasaran di luar perkapalan</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Sektor</th>
+<th>Contoh aset dasar</th>
+<th>Pengganti PLN yang ditargetkan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pertahanan dan perkapalan</td>
+<td>Kontrak Kemhan tahun jamak (kapal, kendaraan tempur, pesawat)</td>
+<td>Kredit ekspor terikat pemasok asing</td>
+</tr>
+<tr>
+<td>Perkeretaapian</td>
+<td>Kontrak sarana dan prasarana dengan operator milik negara</td>
+<td>Pinjaman bilateral proyek kereta</td>
+</tr>
+<tr>
+<td>Energi</td>
+<td>PPA dengan PLN Persero, kontrak transmisi</td>
+<td>Pinjaman sindikasi valas</td>
+</tr>
+<tr>
+<td>Hilirisasi</td>
+<td>Kontrak <em>offtake</em> produk olahan dalam Rupiah</td>
+<td>Pinjaman pemegang saham asing</td>
+</tr>
+<tr>
+<td>Infrastruktur maritim</td>
+<td>Konsesi pelabuhan, Giant Sea Wall</td>
+<td>Pinjaman lembaga multilateral untuk porsi Rupiah</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="107-uji-substitusi-kapan-tpb-dipilih">10.7 Uji substitusi: kapan TPB dipilih</h3>
+<p>TPB tidak otomatis lebih murah dari PLN. Kredit ekspor tertentu memiliki bunga rendah. Karena itu setiap proyek diuji dengan aturan berikut sebelum memilih sumber pembiayaan:</p>
+<blockquote>
+<p><strong>Pilih TPB bila</strong> biaya all-in TPB dalam Rupiah ≤ biaya PLN + biaya lindung nilai valas + premi pengadaan terikat, <strong>atau</strong> selisih biayanya lebih kecil daripada nilai tambah domestik tambahan (D02) yang dihasilkan karena pengadaan tidak terikat.</p>
+</blockquote>
+<p>Proyek yang sudah tercantum dalam daftar rencana PLN jangka menengah (Blue Book Bappenas) diperiksa satu per satu sebagai kandidat substitusi.</p>
+<h3 id="108-tata-kelola-dan-pengaman-khusus-tpb">10.8 Tata kelola dan pengaman khusus TPB</h3>
+<ul>
+<li><strong>Pencatatan utang:</strong> kewajiban TPB dicatat di neraca penerbit, dan bagian yang didukung negara dicatat sebagai kewajiban kontinjensi dalam statistik utang. Pengurangan PLN tidak boleh diganti dengan utang tersembunyi.</li>
+<li><strong>Batas grup:</strong> jumlah TPB beredar per BUMN dan per program dibatasi terhadap nilai kontrak yang sudah dialokasikan dalam pagu.</li>
+<li><strong>Register tunggal:</strong> setiap kontrak, milestone, seri token dan pemasok memiliki ID dalam register identitas bersama Danantara (Bab 14.5).</li>
+<li><strong>Pemisahan peran:</strong> penerbit, validator, kustodian, agen pembayaran dan investor jangkar adalah pihak berbeda.</li>
+<li><strong>Pengungkapan:</strong> progres fisik, dana dilepas, porsi pemasok domestik dan rekening penampungan dipublikasikan agregat setiap kuartal. Data rahasia hanya tersedia melalui node regulator.</li>
+</ul>
+<hr />
+<h2 id="11-tata-kelola-pengungkapan-perlindungan-investor-dan-distribusi-manfaat">11. Tata kelola, pengungkapan, perlindungan investor dan distribusi manfaat</h2>
+<h3 id="111-prinsip-tata-kelola">11.1 Prinsip tata kelola</h3>
+<p>Kajian ini mengusulkan agar NRF dan alokasi mandatnya di Danantara mengikuti <strong>Santiago Principles (IFSWF)</strong> dan <strong>OECD SOE Guidelines 2024</strong> yang sudah dipakai D1 dan D2:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Prinsip</th>
+<th>Penerapan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Landasan hukum yang jelas</td>
+<td>Undang-undang NRF: tujuan, aturan penarikan, porsi tabungan, larangan penggunaan</td>
+</tr>
+<tr>
+<td>Pemisahan pemilik dan pengelola</td>
+<td>NRF/Kementerian Keuangan sebagai pemilik; Danantara sebagai pengelola bermandat</td>
+</tr>
+<tr>
+<td>Aturan fiskal</td>
+<td>Batas penerbitan TEPSDA terhadap PDB atau penerimaan SDA; rasio cakupan; pencatatan sebagai utang</td>
+</tr>
+<tr>
+<td>Independensi valuasi</td>
+<td>Competent Person dan valuator independen; komite valuasi</td>
+</tr>
+<tr>
+<td>Transparansi</td>
+<td>Laporan tahunan teraudit dan pembaruan kuartalan; portal data publik</td>
+</tr>
+<tr>
+<td>Akuntabilitas</td>
+<td>Audit BPK; pelaporan ke DPR; evaluasi independen</td>
+</tr>
+<tr>
+<td>Pencegahan konflik</td>
+<td>Larangan pejabat NRF/Danantara memiliki kepentingan di pemegang izin; register konflik</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="112-perlindungan-investor">11.2 Perlindungan investor</h3>
+<ul>
+<li>Prospektus memuat risiko harga komoditas, transisi energi, hukum, teknologi dan likuiditas.</li>
+<li>Seri ritel: batas pembelian per investor, edukasi wajib, kanal penjualan berizin, larangan janji imbal hasil di luar ketentuan.</li>
+<li>Pasar sekunder yang diawasi; pengungkapan transaksi agregat.</li>
+</ul>
+<h3 id="113-langkah-penertiban-dan-peninjauan-izin">11.3 Langkah penertiban dan peninjauan izin</h3>
+<p>Langkah 1–2 D5 (penertiban tambang ilegal; peninjauan IUP dan HGU) dapat meningkatkan penerimaan dan kualitas data cadangan, tetapi harus:</p>
+<ul>
+<li>dilakukan melalui proses hukum yang adil dan dapat diuji;</li>
+<li>memperhatikan hak masyarakat dan masyarakat adat atas tanah;</li>
+<li>mempertimbangkan risiko sengketa dan arbitrase investasi;</li>
+<li><strong>tidak</strong> dijadikan dasar penerbitan TEPSDA sampai status hukum wilayah final.</li>
+</ul>
+<h3 id="114-distribusi-manfaat-melalui-koperasi">11.4 Distribusi manfaat melalui koperasi</h3>
+<p>Keterlibatan Koperasi Merah Putih (langkah 8 D5) dapat dirancang dalam dua jalur yang dipisahkan tegas:</p>
+<ol>
+<li><strong>Jalur program:</strong> manfaat sosial-ekonomi dianggarkan eksplisit dari penerimaan aktual NRF, dengan indikator hasil.</li>
+<li><strong>Jalur investasi ritel:</strong> koperasi yang memenuhi syarat dapat menjadi agen penjual seri ritel TEPSDA dengan pengawasan OJK; anggota memperoleh akses investasi berisiko rendah, bukan janji pembagian hasil tambang.</li>
+</ol>
+<hr />
+<h2 id="12-risiko-makro-fiskal-dan-uji-stres">12. Risiko makro-fiskal dan uji stres</h2>
+<h3 id="121-daftar-risiko">12.1 Daftar risiko</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Risiko</th>
+<th>Mekanisme</th>
+<th>Pengaman</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Harga komoditas</td>
+<td>Penurunan harga menurunkan arus kas dan cakupan</td>
+<td>Price deck konservatif; cadangan likuiditas; rasio cakupan</td>
+</tr>
+<tr>
+<td>Transisi energi (batubara)</td>
+<td>Permintaan global turun; aset terdampar</td>
+<td>Haircut tambahan; tenor pendek; prioritas mineral transisi</td>
+</tr>
+<tr>
+<td>Hukum dan perizinan</td>
+<td>Sengketa izin, perubahan regulasi</td>
+<td>Hanya wilayah berstatus final; kajian hukum per wilayah</td>
+</tr>
+<tr>
+<td>Fiskal</td>
+<td>Kewajiban menambah utang; penerimaan masa depan terikat</td>
+<td>Pencatatan sebagai utang; batas penerbitan; aturan fiskal</td>
+</tr>
+<tr>
+<td>Moneter dan nilai tukar</td>
+<td>Arus modal asing; tekanan Rupiah</td>
+<td>Penyelesaian Rupiah; koordinasi BI; batas investor asing per seri</td>
+</tr>
+<tr>
+<td>Tata kelola dan <em>capture</em></td>
+<td>Penggunaan dana untuk proyek tidak layak</td>
+<td>Gerbang P0–P6; pengelola bermandat; audit independen</td>
+</tr>
+<tr>
+<td>Valuasi berlebihan</td>
+<td>Nilai in-situ dipakai sebagai agunan</td>
+<td>Aturan valuasi Bab 7.4</td>
+</tr>
+<tr>
+<td>Teknologi dan siber</td>
+<td>Kegagalan kontrak pintar, peretasan</td>
+<td>Audit kode; jaringan berizin; mekanisme pemulihan</td>
+</tr>
+<tr>
+<td>Reputasi</td>
+<td>Persepsi "mata uang tambang" atau spekulasi</td>
+<td>Komunikasi yang jelas: efek negara, bukan mata uang</td>
+</tr>
+<tr>
+<td>Lingkungan dan sosial</td>
+<td>Kerusakan, konflik lahan</td>
+<td>Faktor pengubah KCMI; standar ESG; penangguhan bila syarat gagal</td>
+</tr>
+<tr>
+<td>Kontrak pemerintah (TPB)</td>
+<td>Pagu tahun jamak tidak tersedia, kontrak diubah atau diputus</td>
+<td>Hanya kontrak yang sudah dialokasikan; klausul rekening penampungan; cadangan likuiditas</td>
+</tr>
+<tr>
+<td>Desak-mendesak pasar domestik (TPB)</td>
+<td>TPB menyerap dana yang semula membeli SBN; biaya pendanaan negara naik</td>
+<td>Batas penerbitan terkoordinasi dengan kalender SBN; harga terpatok kurva SBN</td>
+</tr>
+<tr>
+<td>Pergeseran risiko valas (TPB)</td>
+<td>Porsi impor tetap memerlukan valas</td>
+<td>Lokalisasi DOCK-UP; valas domestik; lindung nilai; batas porsi valas per seri</td>
+</tr>
+<tr>
+<td>Kerahasiaan pertahanan (TPB)</td>
+<td>Kebocoran spesifikasi melalui data milestone</td>
+<td>Bukti tanpa pengungkapan; klasifikasi Kemhan; cloud berdaulat BSSN</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="122-uji-stres-yang-diusulkan">12.2 Uji stres yang diusulkan</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Skenario</th>
+<th>Guncangan</th>
+<th>Ukuran yang diuji</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Harga</td>
+<td>Harga batubara −40%, mineral −30% selama tiga tahun</td>
+<td>Rasio cakupan; kebutuhan cadangan likuiditas</td>
+</tr>
+<tr>
+<td>Transisi</td>
+<td>Produksi batubara turun 50% dalam 10 tahun</td>
+<td>Nilai kini bagian negara; kemampuan bayar pokok</td>
+</tr>
+<tr>
+<td>Hukum</td>
+<td>20% wilayah terkena sengketa</td>
+<td>Penggantian aset dasar; dampak pada seri beredar</td>
+</tr>
+<tr>
+<td>Nilai tukar</td>
+<td>Rupiah −15%; spread +200 bps</td>
+<td>Biaya refinancing; arus modal</td>
+</tr>
+<tr>
+<td>Gabungan grup</td>
+<td>Harga turun + BUMN tambang rugi + bank BUMN terdampak</td>
+<td>Korelasi risiko lintas NRF, Danantara dan perbankan BUMN</td>
+</tr>
+</tbody>
+</table></div>
+<p>Guncangan bersifat ilustratif, bukan proyeksi. Uji stres dijalankan simultan di tingkat grup, sesuai D2.</p>
+<hr />
+<h2 id="13-pelajaran-internasional">13. Pelajaran internasional</h2>
+<blockquote>
+<p>Rujukan dalam bab ini berasal dari pengetahuan umum penyusun dan perlu diverifikasi sebelum dikutip dalam dokumen resmi.</p>
+</blockquote>
+<h3 id="131-dana-sumber-daya-menabung-bukan-meminjam">13.1 Dana sumber daya: menabung, bukan meminjam</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Pembanding</th>
+<th>Praktik</th>
+<th>Pelajaran untuk NRF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Norwegia (Government Pension Fund Global)</td>
+<td>Penerimaan minyak ditabung dan diinvestasikan global; aturan penarikan fiskal</td>
+<td>Pisahkan penerimaan dari belanja; aturan penarikan yang jelas</td>
+</tr>
+<tr>
+<td>Chile (Economic and Social Stabilization Fund)</td>
+<td>Dana stabilisasi tembaga dengan aturan fiskal struktural</td>
+<td>Penyangga siklus harga</td>
+</tr>
+<tr>
+<td>Botswana (Pula Fund)</td>
+<td>Penerimaan berlian ditabung untuk generasi mendatang</td>
+<td>Disiplin tabungan antargenerasi</td>
+</tr>
+<tr>
+<td>Timor-Leste (Petroleum Fund)</td>
+<td>Penerimaan migas dikelola dengan batas penarikan berkelanjutan</td>
+<td>Batas penarikan; transparansi</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="132-pinjaman-berbasis-sumber-daya">13.2 Pinjaman berbasis sumber daya</h3>
+<p>Kajian lembaga seperti Natural Resource Governance Institute dan pengalaman sejumlah negara produsen menunjukkan bahwa <strong>pinjaman berbasis sumber daya</strong> sering kurang transparan, berbiaya tinggi, mengikat produksi masa depan, dan menyulitkan restrukturisasi utang saat harga jatuh. Pelajaran: bila monetisasi diperlukan, gunakan <strong>efek terbuka, berperingkat, dan tercatat sebagai utang</strong>, bukan perjanjian bilateral tertutup.</p>
+<h3 id="133-tokenisasi-efek-pemerintah">13.3 Tokenisasi efek pemerintah</h3>
+<p>Beberapa lembaga telah menerbitkan obligasi berbasis teknologi buku besar terdistribusi, misalnya obligasi blockchain Bank Dunia (bond-i, 2018), obligasi digital European Investment Bank (2021), dan obligasi hijau tertokenisasi Pemerintah Hong Kong (2023). Pelajaran: tokenisasi paling berhasil sebagai <strong>peningkatan efisiensi penerbitan, penyelesaian dan transparansi efek yang sudah dikenal</strong>, bukan sebagai pengganti kerangka hukum efek.</p>
+<h3 id="134-token-negara-berbasis-cadangan">13.4 Token negara berbasis cadangan</h3>
+<p>Petro (Venezuela, 2018) diklaim didukung cadangan minyak, tetapi tidak memiliki mekanisme penebusan, verifikasi cadangan atau pasar yang kredibel, dan akhirnya dihentikan. Pelajaran: <strong>cadangan di dalam tanah tidak menciptakan kepercayaan dengan sendirinya</strong>; yang menciptakan kepercayaan adalah hak hukum yang jelas, arus kas yang dapat diverifikasi, dan tata kelola yang dapat diuji.</p>
+<hr />
+<h2 id="14-agenda-transformasi-danantara-lainnya">14. Agenda transformasi Danantara lainnya</h2>
+<p>NRF hanya akan bermanfaat bila agenda transformasi Danantara berjalan. Bab ini merangkum enam pilar dari kajian sebelumnya.</p>
+<h3 id="141-tata-kelola-dan-organisasi">14.1 Tata kelola dan organisasi</h3>
+<ul>
+<li>Bentuk <strong>unit Industri Strategis dan Pelaksanaan Proyek di tingkat BPI</strong> (diposisikan sebagai NITO), uji coba 90 hari [D1, D4].</li>
+<li>Jabatan Wakil Kepala formal hanya setelah harmonisasi Pasal 12–18 dan kriteria kenaikan terpenuhi [D1].</li>
+<li>Gerbang proyek <strong>P0–P6</strong> dan peta kewenangan dengan satu pemilik hasil per aktivitas [D1].</li>
+</ul>
+<h3 id="142-manajemen-kinerja">14.2 Manajemen kinerja</h3>
+<ul>
+<li><strong>Tiga scorecard</strong> (investasi I01–I12, operasi BUMN O01–O15, pembangunan D01–D12) dengan kelas bukti dan kontrol hitung ganda [D2].</li>
+<li>Ditambah <strong>ukuran NRF</strong>: fiscal capture, NPV bagian negara, rasio cakupan TEPSDA, porsi tabungan (Bab 16).</li>
+</ul>
+<h3 id="143-mesin-permintaan-dan-dock-up">14.3 Mesin permintaan dan DOCK-UP</h3>
+<ul>
+<li>Proyek anchor (Giant Sea Wall, 3 Juta Rumah, maritim, pertahanan) dan proyek hilirisasi yang didanai NRF dipetakan ke komponen dalam negeri [D4].</li>
+<li><strong>DOCK-UP</strong> (Develop, Off-taker, Certification, Upgrading) dengan gerbang <strong>S1–S4</strong> berbasis TRL/MRL; rintisan 1 integrator, 20–30 UKM, 3–5 kelompok komponen [D3].</li>
+</ul>
+<h3 id="144-pemulihan-bumn-konstruksi">14.4 Pemulihan BUMN Konstruksi</h3>
+<ul>
+<li>Estimasi kerugian 2025 sekitar Rp28 triliun pada empat BUMN Konstruksi (kelas C), anggaran infrastruktur turun sekitar 45% [D4].</li>
+<li>Kembali ke model kontraktor yang disiplin; aset warisan dipisahkan setelah diagnosis dan valuasi independen. <strong>Dana NRF tidak dipakai untuk menutup kerugian tanpa rencana pemulihan.</strong></li>
+</ul>
+<h3 id="145-data-dan-ai">14.5 Data dan AI</h3>
+<ul>
+<li><strong>Portfolio Control Tower</strong> dan sistem multi-agentic AI dengan human-in-the-loop, mulai dari BUMN Konstruksi [D4].</li>
+<li><strong>Register identitas bersama</strong> diperluas ke ID wilayah cadangan dan ID seri TEPSDA, sehingga proyek, pemasok, cadangan dan efek berada dalam satu tulang punggung data.</li>
+</ul>
+<h3 id="146-isu-rekonsiliasi-antar-dokumen">14.6 Isu rekonsiliasi antar dokumen</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Isu</th>
+<th>Penyelesaian</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Dua sistem gerbang (D1 G0–G6; D3 G1–G4)</td>
+<td>P0–P6 untuk proyek; S1–S4 untuk pemasok</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Kepanjangan DOCK-UP berbeda (D3 vs D4)</td>
+<td>Baku: Develop, Off-taker, Certification, Upgrading</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Jadwal AI "3 bulan" vs 24 bulan</td>
+<td>3 bulan = MVP; 24 bulan = perluasan</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Angka belum terverifikasi (D4, D5)</td>
+<td>Kelas C; konfirmasi dengan sumber resmi</td>
+</tr>
+<tr>
+<td>5</td>
+<td>NITO dan kendaraan aset warisan vs unit di BPI</td>
+<td>NITO = unit; kendaraan baru setelah bukti</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Selisih Rp18,9 T pada 40 proyek</td>
+<td>Rekonsiliasi sebelum baseline</td>
+</tr>
+<tr>
+<td>7</td>
+<td>NRF di bawah Presiden (D5) vs batas kewenangan BPI atas SDA (D1)</td>
+<td>Pilihan C: NRF pemilik hak; Danantara pengelola bermandat</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Monetisasi "non-utang" (D5 implisit) vs koreksi D1</td>
+<td>Semua kewajiban TEPSDA dicatat sebagai utang</td>
+</tr>
+<tr>
+<td>9</td>
+<td>PALCapital "bukan hibah, bukan utang" tetapi instrumennya <em>debt note</em> (D6)</td>
+<td>Dicatat sebagai kewajiban penerbit; dukungan negara sebagai kewajiban kontinjensi</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Denominasi USD dan <em>stablecoin</em> (D6) vs Rupiah sebagai alat pembayaran sah</td>
+<td>TPB berdenominasi Rupiah; penyelesaian RTGS lalu Rupiah digital</td>
+</tr>
+<tr>
+<td>11</td>
+<td>"Danantara USD900 miliar" (D6) vs angka resmi kelolaan</td>
+<td>Kelas C; pakai angka resmi Danantara</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="15-peta-jalan-terpadu">15. Peta jalan terpadu</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Alur kerja</th>
+<th>0–6 bulan</th>
+<th>6–18 bulan</th>
+<th>18–36 bulan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Landasan hukum NRF dan TEPSDA</td>
+<td>Kajian hukum (Pasal 33, Minerba, Keuangan Negara, SBN/SBSN, Mata Uang, P2SK); rancangan undang-undang atau peraturan</td>
+<td>Penetapan landasan hukum; peraturan OJK/BI untuk tokenisasi efek negara</td>
+<td>Penyempurnaan berbasis pilot</td>
+</tr>
+<tr>
+<td>Cadangan dan valuasi</td>
+<td>Inventarisasi laporan KCMI yang ada; pilih 2–3 wilayah percontohan berstatus final</td>
+<td>Laporan Competent Person independen dan valuasi independen; register satu cadangan satu klaim</td>
+<td>Re-estimasi tahunan; perluasan wilayah</td>
+</tr>
+<tr>
+<td>Instrumen</td>
+<td>Desain TEPSDA dan Sukuk TEPSDA; konsultasi pasar dan rating</td>
+<td>Pilot dalam sandbox regulator; seri kecil berperingkat</td>
+<td>Seri reguler dan seri ritel</td>
+</tr>
+<tr>
+<td>Teknologi</td>
+<td>Desain arsitektur; pemilihan operator jaringan berizin</td>
+<td>Bangun dan uji (audit kode, uji penetrasi); integrasi RTGS</td>
+<td>Integrasi Rupiah digital bila tersedia</td>
+</tr>
+<tr>
+<td>Kelembagaan</td>
+<td>Keputusan Pilihan C; rancangan kontrak mandat Danantara</td>
+<td>Pembentukan NRF; penandatanganan kontrak mandat</td>
+<td>Evaluasi independen pertama</td>
+</tr>
+<tr>
+<td>Penggunaan dana</td>
+<td>Aturan alokasi; pipeline proyek hilirisasi lolos P2</td>
+<td>Alokasi pertama ke proyek lolos P3 dan rintisan DOCK-UP</td>
+<td>Pelaporan hasil D02, D05, D06</td>
+</tr>
+<tr>
+<td>Tokenisasi proyek berdaulat (TPB)</td>
+<td>Opini hukum pengalihan tagihan kontrak Kemhan; restrukturisasi PAL-SUB-1 ke Rupiah; daftar kandidat substitusi dari Blue Book</td>
+<td>Pilot PAL-SUB-1 (setara USD150 juta) dalam sandbox OJK; pelepasan per milestone dengan verifikasi BKI</td>
+<td>2–3 program tambahan (perkapalan, kereta, energi); laporan PLN yang tergantikan</td>
+</tr>
+<tr>
+<td>Transformasi Danantara</td>
+<td>Unit BPI, register 40 proyek, scorecard, MVP AI</td>
+<td>Perluasan unit; S1–S2 DOCK-UP; diagnosis BUMN Konstruksi</td>
+<td>Struktur permanen; S3; AI Fase 3</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Titik keputusan:</strong> bulan 6 (lanjut ke pilot atau tidak), bulan 18 (perluasan seri reguler), bulan 36 (evaluasi independen menyeluruh).</p>
+<hr />
+<h2 id="16-keputusan-yang-diminta-dan-kpi">16. Keputusan yang diminta dan KPI</h2>
+<h3 id="161-keputusan-sekarang">16.1 Keputusan sekarang</h3>
+<ol>
+<li><strong>Menolak opsi mata uang khusus atau stablecoin berbasis cadangan</strong> dan menetapkan arah instrumen pada efek negara atau EBA yang ditokenisasi (TEPSDA/Sukuk TEPSDA).</li>
+<li><strong>Menugaskan kajian hukum dan valuasi</strong> NRF: hak penerimaan, kewenangan penerbitan, perlakuan utang, dan valuasi independen 2–3 wilayah percontohan.</li>
+<li><strong>Menyetujui prinsip Pilihan C</strong>: NRF sebagai pemilik hak penerimaan; Danantara sebagai pengelola investasi bermandat.</li>
+<li><strong>Melanjutkan agenda transformasi Danantara</strong> (unit BPI, scorecard, register, DOCK-UP, BUMN Konstruksi, AI) sebagai prasyarat penggunaan dana NRF.</li>
+<li><strong>Mengajukan sandbox</strong> kepada OJK dan BI untuk pilot TEPSDA berskala kecil.</li>
+<li><strong>Menetapkan TPB sebagai jalur pembiayaan utama industri strategis</strong> sebelum PLN baru diajukan, dimulai dengan pilot PALCapital yang direstrukturisasi ke denominasi Rupiah, harga terpatok kurva SBN, dan pemisahan peran Danantara.</li>
+</ol>
+<h3 id="162-ditunda-sampai-ada-bukti">16.2 Ditunda sampai ada bukti</h3>
+<ul>
+<li>Penerbitan berskala besar dan target Rp100 T/Rp1.000 T.</li>
+<li>Pengikatan cadangan batubara jangka panjang.</li>
+<li>Seri ritel melalui koperasi sebelum pilot institusional berhasil.</li>
+<li>Fase 2–3 PALCapital (10 ribu investor, ritel, perdagangan sekunder) sebelum evaluasi pilot fase 1.</li>
+<li>Pembentukan holding atau badan hukum tambahan di Danantara.</li>
+</ul>
+<h3 id="163-kpi-terpadu">16.3 KPI terpadu</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Area</th>
+<th>KPI</th>
+<th>Sasaran awal (usulan)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fiscal capture</td>
+<td>Penerimaan SDA aktual terhadap baseline</td>
+<td>Baseline dan metode disepakati sebelum target</td>
+</tr>
+<tr>
+<td>Valuasi</td>
+<td>Porsi nilai TEPSDA yang didukung cadangan terbukti</td>
+<td>≥ 70% dari agunan</td>
+</tr>
+<tr>
+<td>Cakupan</td>
+<td>Rasio cakupan nilai kini setelah haircut / efek beredar</td>
+<td>≥ 1,5× setiap kuartal</td>
+</tr>
+<tr>
+<td>Transparansi</td>
+<td>Laporan cadangan, produksi, penerimaan dan cakupan dipublikasikan</td>
+<td>100% seri, setiap kuartal</td>
+</tr>
+<tr>
+<td>Utang</td>
+<td>Kewajiban TEPSDA tercatat dalam statistik utang</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Tabungan</td>
+<td>Porsi penerimaan NRF yang ditabung</td>
+<td>Ditetapkan undang-undang</td>
+</tr>
+<tr>
+<td>Penggunaan dana</td>
+<td>Proyek didanai NRF yang lolos P0–P6</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Kapabilitas</td>
+<td>Nilai tambah domestik tambahan (D02); milestone teknologi (D06)</td>
+<td>Metode disepakati di muka</td>
+</tr>
+<tr>
+<td>Pemasok</td>
+<td>Pipeline pemasok per gerbang S1–S4 (K01)</td>
+<td>Rintisan 20–30 UKM</td>
+</tr>
+<tr>
+<td>Danantara</td>
+<td>Economic profit inkremental BUMN (O02); register 40 proyek</td>
+<td>Positif vs baseline; 100% terpetakan</td>
+</tr>
+<tr>
+<td>Pinjaman luar negeri</td>
+<td>Porsi pembiayaan proyek industri strategis dari instrumen domestik (TPB, TEPSDA) vs PLN</td>
+<td>Baseline disepakati; tren naik setiap tahun</td>
+</tr>
+<tr>
+<td>Pinjaman luar negeri</td>
+<td>PLN baru yang tergantikan oleh TPB (nilai dan jumlah proyek)</td>
+<td>Dilaporkan per tahun terhadap Blue Book</td>
+</tr>
+<tr>
+<td>Kandungan lokal</td>
+<td>Porsi dana TPB yang dibayarkan ke pemasok dalam negeri</td>
+<td>Naik per program; terkait S1–S4</td>
+</tr>
+<tr>
+<td>Integritas TPB</td>
+<td>Dana dilepas setelah verifikasi independen, langsung ke pemasok</td>
+<td>100%; nol pengalihan dana</td>
+</tr>
+<tr>
+<td>Biaya</td>
+<td>Biaya all-in TPB vs PLN + lindung nilai</td>
+<td>Diungkapkan per seri</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>Tujuan segera:</strong> setiap rupiah yang dihimpun dari kekayaan alam dapat ditelusuri ke cadangannya, laporan Competent Person-nya, arus kas negaranya, investasinya, dan hasil yang diverifikasi. Setiap proyek industri strategis yang dapat dibiayai dari tabungan domestik tidak lagi menambah pinjaman luar negeri.</p>
+</blockquote>
+<hr />
+<h2 id="lampiran-a-glosarium">Lampiran A. Glosarium</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Istilah</th>
+<th>Arti</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CRIRSCO</td>
+<td>Committee for Mineral Reserves International Reporting Standards; penyelaras kode pelaporan sumber daya dan cadangan</td>
+</tr>
+<tr>
+<td>KCMI</td>
+<td>Komite Cadangan Mineral Indonesia; kode pelaporan Indonesia dalam keluarga CRIRSCO</td>
+</tr>
+<tr>
+<td>Competent Person</td>
+<td>Profesional bersertifikat yang bertanggung jawab atas estimasi sumber daya dan cadangan</td>
+</tr>
+<tr>
+<td>Cadangan terbukti/terkira</td>
+<td>Bagian sumber daya yang layak ditambang secara ekonomi setelah faktor pengubah</td>
+</tr>
+<tr>
+<td>TEPSDA</td>
+<td>Token Efek Berbasis Penerimaan SDA (usulan kajian)</td>
+</tr>
+<tr>
+<td>EBA</td>
+<td>Efek beragun aset</td>
+</tr>
+<tr>
+<td>SBN/SBSN</td>
+<td>Surat Berharga Negara / Surat Berharga Syariah Negara</td>
+</tr>
+<tr>
+<td>DLT</td>
+<td>Distributed ledger technology; buku besar terdistribusi</td>
+</tr>
+<tr>
+<td>DvP</td>
+<td>Delivery versus payment</td>
+</tr>
+<tr>
+<td>Rasio cakupan</td>
+<td>Nilai kini bagian negara setelah haircut dibagi nilai efek beredar</td>
+</tr>
+<tr>
+<td>Fiscal capture</td>
+<td>Porsi nilai SDA yang menjadi penerimaan negara</td>
+</tr>
+<tr>
+<td>TPB</td>
+<td>Token Proyek Berdaulat: efek Rupiah yang ditokenisasi, beragun tagihan kontrak pemerintah atau arus kas proyek (usulan kajian)</td>
+</tr>
+<tr>
+<td>PLN</td>
+<td>Pinjaman luar negeri (dalam konteks pembiayaan pemerintah dan BUMN, bukan PLN Persero)</td>
+</tr>
+<tr>
+<td>Blue Book</td>
+<td>Daftar Rencana Pinjaman Luar Negeri Jangka Menengah (Bappenas)</td>
+</tr>
+<tr>
+<td>DHE</td>
+<td>Devisa Hasil Ekspor</td>
+</tr>
+<tr>
+<td>STO</td>
+<td>Security token offering; penawaran efek dalam bentuk token</td>
+</tr>
+<tr>
+<td>ERC-3643 (T-REX)</td>
+<td>Standar token efek berizin; transfer hanya antar dompet terverifikasi</td>
+</tr>
+<tr>
+<td>Escrow per milestone</td>
+<td>Dana ditahan pihak ketiga dan dilepas setelah bukti kemajuan fisik</td>
+</tr>
+<tr>
+<td>Rekening penampungan</td>
+<td><em>Collection account</em>; menerima pembayaran kontrak sebelum dibagi menurut air terjun pembayaran</td>
+</tr>
+<tr>
+<td>TKDN</td>
+<td>Tingkat Komponen Dalam Negeri</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="lampiran-b-ringkasan-metrik-danantara">Lampiran B. Ringkasan metrik Danantara</h2>
+<p>Investasi: I01–I12 (imbal hasil bersih pasar publik, IRR bersih, PME, DPI, NPV finansial, rasio kerugian, konsentrasi, likuiditas stres, biaya investasi, mobilisasi swasta, milestone strategis, spread pendanaan). Operasi BUMN: O01–O15 (ROIC − WACC, economic profit, margin EBITDA, konversi kas, biaya unit, nilai tambah per pegawai, pertumbuhan organik, utang bersih/EBITDA, manfaat transformasi, keandalan layanan, ROE bank, CIR, NPL, CET1, biaya PSO). Pembangunan: D01–D12 (EIRR, nilai tambah domestik, kerja tambahan, devisa bersih, pangsa nilai tambah domestik, milestone teknologi, utilisasi, commissioning, produktivitas pemasok, GRK, layanan, dukungan publik per hasil). Indikator kapabilitas usulan: K01–K05. Ukuran NRF usulan: fiscal capture, NPV bagian negara, rasio cakupan, porsi tabungan. Ukuran TPB usulan: porsi pembiayaan domestik vs PLN, PLN tergantikan, porsi pemasok dalam negeri, integritas pelepasan dana.</p>
+<h2 id="lampiran-c-rujukan">Lampiran C. Rujukan</h2>
+<p><strong>Dokumen internal:</strong> D1 Evaluasi Tata Kelola Danantara (2 Okt 2026); D2 Studi Kinerja Danantara (6 Okt 2026); D3 DOCK-UP (Okt 2026); D4 Platform Kapabilitas Industri Nasional; D5 Indonesia Natural Resource Fund: Executive Summary (berkas 250925); D6 PALCapital: Sovereign Maritime Tokenization Engine Rev B (PT PAL Indonesia).</p>
+<p><strong>Rujukan hukum dan standar (perlu diverifikasi dengan naskah resmi):</strong> UUD 1945 Pasal 33; UU Minerba (UU 4/2009 sebagaimana diubah UU 3/2020); UU 7/2011 tentang Mata Uang; UU 4/2023 tentang Pengembangan dan Penguatan Sektor Keuangan; UU 17/2003 tentang Keuangan Negara; UU 24/2002 tentang Surat Utang Negara; UU 19/2008 tentang SBSN; UU 9/2018 tentang PNBP; PP 10/2025 dan PP 19/2026 tentang Danantara; UU 16/2025; Kode KCMI; CRIRSCO International Reporting Template; UNFC; Santiago Principles (IFSWF); OECD SOE Guidelines 2024; PP 10/2011 tentang Tata Cara Pengadaan Pinjaman Luar Negeri dan Penerimaan Hibah; ketentuan Devisa Hasil Ekspor SDA (PP 36/2023 sebagaimana diubah); ketentuan OJK tentang Inovasi Teknologi Sektor Keuangan dan sandbox regulasi; praktik SBSN berbasis proyek; standar token ERC-3643.</p>
+<p><strong>Rujukan praktik internasional (pengetahuan umum penyusun, perlu diverifikasi):</strong> Government Pension Fund Global (Norwegia); Economic and Social Stabilization Fund (Chile); Pula Fund (Botswana); Petroleum Fund (Timor-Leste); kajian Natural Resource Governance Institute tentang pinjaman berbasis sumber daya; obligasi bond-i Bank Dunia (2018); obligasi digital EIB (2021); obligasi hijau tertokenisasi Hong Kong (2023); Petro (Venezuela, 2018).</p>
+<h2 id="lampiran-d-batas-kajian">Lampiran D. Batas kajian</h2>
+<p>Kajian ini adalah sintesis analitis atas enam dokumen internal dan pengetahuan umum tentang hukum serta praktik internasional. Tidak ada opini hukum, valuasi cadangan, pemeriksaan wilayah, wawancara regulator atau uji pasar yang dilakukan. Ilustrasi numerik di Bab 7 dan Bab 10.4 adalah hipotetis. Penilaian D6 didasarkan pada dek usulan saja, tanpa akses ke kontrak Kemhan, model keuangan, kode kontrak pintar atau korespondensi dengan OJK. Seluruh desain kelembagaan dan instrumen adalah usulan untuk diskusi.</p></main>
+</div>
+<footer>Dokumen ini adalah kajian dan rancangan untuk diskusi. Bukan audit kepatuhan, opini hukum, opini valuasi, rating resmi, atau otorisasi penerbitan efek maupun pembiayaan.</footer>
+</body>
+</html>
