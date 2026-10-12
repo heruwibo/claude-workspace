@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arsitektur Sistem KMP</title>
+<style>
+:root{
+  --bg:#ffffff; --surface:#f5f7fb; --surface-2:#eaf0fa; --ink:#14181f; --muted:#5a6475;
+  --line:#d5dbe6; --blue:#1a4fa0; --blue-soft:#dfe8f7; --red:#b4232a; --red-soft:#f8e3e4;
+  --green:#1d7a4f; --green-soft:#e1f2e9; --amber:#9a6200; --amber-soft:#f8eed8;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1319; --surface:#171c25; --surface-2:#1d2430; --ink:#e7ebf2; --muted:#9aa5b8;
+    --line:#2c3545; --blue:#7aa7ec; --blue-soft:#1b2a44; --red:#ec7a80; --red-soft:#3a1d21;
+    --green:#6fcf9f; --green-soft:#16302a; --amber:#e6b358; --amber-soft:#352a14;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1319; --surface:#171c25; --surface-2:#1d2430; --ink:#e7ebf2; --muted:#9aa5b8;
+  --line:#2c3545; --blue:#7aa7ec; --blue-soft:#1b2a44; --red:#ec7a80; --red-soft:#3a1d21;
+  --green:#6fcf9f; --green-soft:#16302a; --amber:#e6b358; --amber-soft:#352a14;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1080px;margin:0 auto;padding:40px 16px 64px}
+h1{font-size:30px;line-height:1.2;margin:0 0 8px;letter-spacing:-.01em}
+h2{font-size:21px;margin:48px 0 12px;padding-top:8px;border-top:1px solid var(--line)}
+h3{font-size:16px;margin:20px 0 6px}
+p{margin:0 0 12px}
+.lead{color:var(--muted);font-size:16px;max-width:760px}
+.meta{color:var(--muted);font-size:13px;margin-bottom:24px}
+.note{font-size:13px;color:var(--muted);border-left:3px solid var(--amber);padding:6px 12px;background:var(--amber-soft);border-radius:0 6px 6px 0;margin:12px 0}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;background:var(--amber-soft);color:var(--amber);vertical-align:middle;margin-left:4px}
+
+/* Prinsip */
+.principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
+.principle{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.principle b{display:block;margin-bottom:4px;color:var(--blue)}
+.principle span{font-size:14px;color:var(--muted)}
+
+/* Diagram berlapis */
+.arch{display:flex;flex-direction:column;gap:0;margin-top:16px}
+.layer{display:grid;grid-template-columns:150px 1fr;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.layer-label{padding:12px;font-weight:700;font-size:13px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--line)}
+.layer-label small{font-weight:400;color:var(--muted);font-size:12px}
+.layer-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;padding:10px}
+.box{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+.box b{display:block;font-size:13px}
+.box span{color:var(--muted);font-size:12px;line-height:1.4;display:block}
+.l-user .layer-label{background:var(--surface-2)}
+.l-store .layer-label{background:var(--green-soft);color:var(--green)}
+.l-int .layer-label{background:var(--surface-2)}
+.l-hq .layer-label{background:var(--blue-soft);color:var(--blue)}
+.l-hq .box.coop{border-color:var(--red);background:var(--red-soft)}
+.l-sc .layer-label{background:var(--amber-soft);color:var(--amber)}
+.l-data .layer-label{background:var(--surface-2)}
+.l-ext .layer-label{background:var(--surface-2)}
+.link{display:flex;align-items:center;justify-content:center;gap:10px;padding:6px 0;font-size:12px;color:var(--muted)}
+.link::before,.link::after{content:"";flex:0 0 1px;height:18px;background:var(--line)}
+.link i{font-style:normal;color:var(--blue);font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin-top:10px}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+
+/* Tabel */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:640px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--surface);font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+
+/* Alur */
+.flow{margin:14px 0 22px}
+.flow h3{display:flex;align-items:center;gap:8px}
+.flow h3 .num{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--blue);color:var(--bg);font-size:12px}
+.steps{display:flex;flex-wrap:wrap;gap:6px;align-items:stretch;list-style:none;padding:0;margin:8px 0 0;counter-reset:s}
+.steps li{flex:1 1 170px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px;position:relative;counter-increment:s}
+.steps li::before{content:counter(s);font-size:11px;font-weight:700;color:var(--blue);display:block}
+.steps li b{display:block;font-size:12px;color:var(--muted);font-weight:600}
+
+/* Roadmap */
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:12px}
+.phase{border:1px solid var(--line);border-top:4px solid var(--blue);border-radius:10px;padding:12px 14px;background:var(--surface)}
+.phase h3{margin:0 0 6px}
+.phase ul{margin:0;padding-left:18px;font-size:14px}
+ul{padding-left:20px}
+li{margin-bottom:4px}
+
+@media (max-width:640px){
+  h1{font-size:24px}
+  .layer{grid-template-columns:1fr}
+  .layer-label{border-right:0;border-bottom:1px solid var(--line);flex-direction:row;gap:8px;align-items:baseline;justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+<main>
+
+<h1>Arsitektur Sistem Koperasi Merah Putih (KMP)</h1>
+<p class="lead">Rancangan arsitektur bisnis dan teknologi untuk mentransformasi Koperasi Merah Putih dari koperasi tradisional menjadi jaringan toko swalayan (<i>convenience store</i>) modern yang terpusat dan dapat diskalakan, dengan tetap mempertahankan identitas koperasi: anggota adalah pelanggan sekaligus pemilik.</p>
+<p class="meta">Sumber: sources/12102026/kmp_system.md · Disusun 12 Oktober 2026</p>
+
+<p class="note">Komponen bertanda <span class="tag">Rekomendasi</span> adalah tambahan penyusun untuk melengkapi arsitektur (mis. lapisan integrasi, gerbang pembayaran, tahapan implementasi) dan tidak terdapat dalam dokumen sumber. Bagian "System Flow" pada dokumen sumber terpotong, sehingga alur di Bagian 4 disusun dari deskripsi komponen.</p>
+
+<h2>1. Prinsip Arsitektur</h2>
+<p>Untuk menyamai efisiensi jaringan ritel besar, arsitektur memisahkan <b>operasional toko</b> (<i>front-end</i>) dari <b>rantai pasok dan keuangan</b> (<i>back-end</i>), serta menambahkan sistem <b>manajemen anggota</b> yang khas koperasi untuk mengelola pembagian Sisa Hasil Usaha (SHU).</p>
+<div class="principles">
+  <div class="principle"><b>Terpusat di HQ</b><span>Akuntansi, pengadaan, harga, dan promosi dikelola kantor pusat. Toko hanya fokus pada penjualan dan layanan pelanggan.</span></div>
+  <div class="principle"><b>Satu sumber kebenaran</b><span>Master Data Management menjadi acuan tunggal harga, SKU/barcode, promo, dan planogram untuk seluruh toko.</span></div>
+  <div class="principle"><b>Toko <i>offline-first</i></b><span>POS tetap berjalan saat internet terputus dan menyinkronkan data ke ERP begitu koneksi pulih.</span></div>
+  <div class="principle"><b>Anggota sebagai pemilik</b><span>Setiap transaksi anggota tercatat untuk poin, diskon berjenjang, dan perhitungan porsi SHU.</span></div>
+</div>
+
+<h2>2. Diagram Arsitektur Berlapis</h2>
+<p>Data penjualan mengalir dari toko ke atas menuju ERP pusat; data induk (harga, promo, planogram) dan pengiriman barang mengalir dari pusat ke toko.</p>
+
+<div class="arch" role="img" aria-label="Diagram arsitektur berlapis Koperasi Merah Putih">
+  <div class="layer l-user">
+    <div class="layer-label">Pengguna &amp; Kanal<small>siapa yang berinteraksi</small></div>
+    <div class="layer-body">
+      <div class="box"><b>Anggota Koperasi</b><span>Aplikasi anggota, kartu QR</span></div>
+      <div class="box"><b>Pelanggan Umum</b><span>Belanja di kasir</span></div>
+      <div class="box"><b>Kasir &amp; Staf Toko</b><span>POS, perangkat genggam</span></div>
+      <div class="box"><b>Manajemen HQ</b><span>Dasbor BI, ERP</span></div>
+    </div>
+  </div>
+  <div class="link"><i>↕</i> transaksi · pindai QR anggota · tampilan poin &amp; estimasi SHU</div>
+
+  <div class="layer l-store">
+    <div class="layer-label">Lapisan 3<br>Operasional Toko<small>front-end, ringan</small></div>
+    <div class="layer-body">
+      <div class="box"><b>POS Tersinkron Cloud</b><span>Berjalan offline, basis data lokal, sinkron saat online</span></div>
+      <div class="box"><b>Perangkat Inventaris Genggam</b><span>Stock opname, terima kiriman DC, retur/kedaluwarsa</span></div>
+      <div class="box"><b>Planogram Toko</b><span>Tata letak rak standar dari HQ</span></div>
+    </div>
+  </div>
+  <div class="link"><i>↑</i> penjualan, mutasi stok, poin anggota &nbsp;&nbsp; <i>↓</i> harga, promo, planogram</div>
+
+  <div class="layer l-int">
+    <div class="layer-label">Integrasi<span class="tag">Rekomendasi</span><small>penghubung</small></div>
+    <div class="layer-body">
+      <div class="box"><b>API Gateway</b><span>Satu pintu akses untuk POS, aplikasi, dan mitra</span></div>
+      <div class="box"><b>Mesin Sinkronisasi &amp; Antrean Pesan</b><span>Menampung transaksi offline, kirim ulang otomatis</span></div>
+      <div class="box"><b>Identitas &amp; Akses</b><span>Login staf, peran, akun anggota</span></div>
+    </div>
+  </div>
+  <div class="link"><i>↕</i></div>
+
+  <div class="layer l-hq">
+    <div class="layer-label">Lapisan 1<br>Cloud ERP &amp; HQ<small>back-end terpusat</small></div>
+    <div class="layer-body">
+      <div class="box"><b>Keuangan &amp; Akuntansi</b><span>Buku besar, utang usaha, piutang, laba bersih untuk SHU</span></div>
+      <div class="box"><b>Pengadaan &amp; Vendor</b><span>Negosiasi grosir terpusat dengan distributor FMCG</span></div>
+      <div class="box"><b>Master Data (MDM)</b><span>Harga, SKU/barcode, promo, planogram</span></div>
+      <div class="box coop"><b>Lapisan 4 · CRM Anggota</b><span>Keanggotaan, poin, harga berjenjang, estimasi SHU</span></div>
+    </div>
+  </div>
+  <div class="link"><i>↕</i> pesanan isi ulang · status stok DC · PO pemasok</div>
+
+  <div class="layer l-sc">
+    <div class="layer-label">Lapisan 2<br>Rantai Pasok &amp; DC<small>logistik</small></div>
+    <div class="layer-body">
+      <div class="box"><b>Warehouse Management (WMS)</b><span>Stok gudang pusat, pemesanan ulang prediktif</span></div>
+      <div class="box"><b>Pengisian Ulang Otomatis</b><span>Stok toko &lt; ambang batas → tiket picking</span></div>
+      <div class="box"><b>Manajemen Armada</b><span>Rute optimal, 1 truk melayani 5–10 toko per klaster</span></div>
+      <div class="box"><b>Cross-Docking</b><span>Barang segar langsung dipindah ke truk keluar</span></div>
+    </div>
+  </div>
+  <div class="link"><i>↓</i> semua lapisan mengirim data ke</div>
+
+  <div class="layer l-data">
+    <div class="layer-label">Data &amp; Analitik<small>pengambilan keputusan</small></div>
+    <div class="layer-body">
+      <div class="box"><b>Gudang Data</b><span>Data penjualan, stok, anggota terkonsolidasi <span class="tag">Rekomendasi</span></span></div>
+      <div class="box"><b>Business Intelligence</b><span>Penjualan harian per toko, barang terlaris, susut (<i>shrinkage</i>)</span></div>
+    </div>
+  </div>
+  <div class="link"><i>↕</i></div>
+
+  <div class="layer l-ext">
+    <div class="layer-label">Pihak Eksternal<small>mitra</small></div>
+    <div class="layer-body">
+      <div class="box"><b>Pemasok / Distributor FMCG</b><span>mis. Unilever, Indofood: PO, pengiriman ke DC</span></div>
+      <div class="box"><b>Bank &amp; Pembayaran Digital</b><span>QRIS, transfer, pembayaran SHU <span class="tag">Rekomendasi</span></span></div>
+    </div>
+  </div>
+</div>
+<div class="legend">
+  <span style="--c:var(--green)">Operasional toko</span>
+  <span style="--c:var(--blue)">Inti ERP pusat</span>
+  <span style="--c:var(--red)">Pembeda koperasi (anggota &amp; SHU)</span>
+  <span style="--c:var(--amber)">Rantai pasok</span>
+</div>
+
+<h2>3. Rincian Komponen per Lapisan</h2>
+
+<h3>Lapisan 1 — Cloud ERP &amp; Kantor Pusat (HQ)</h3>
+<p>Inti jaringan ritel modern. Manajer toko tidak menangani akuntansi atau pengadaan.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Komponen</th><th>Fungsi</th><th>Keluaran utama</th></tr></thead>
+<tbody>
+<tr><td>Keuangan &amp; Akuntansi Terpusat</td><td>Otomasi buku besar (GL), utang usaha ke pemasok (AP), dan piutang (AR). Melacak laba bersih sebagai dasar SHU.</td><td>Laporan keuangan, dasar perhitungan SHU akhir tahun</td></tr>
+<tr><td>Pengadaan &amp; Manajemen Vendor</td><td>HQ bernegosiasi langsung dengan distributor FMCG untuk pembelian grosir; toko tidak membeli stok sendiri.</td><td>Kontrak pemasok, PO terpusat, harga beli lebih rendah</td></tr>
+<tr><td>Master Data Management</td><td>Sumber tunggal harga, barcode (SKU), dan promo. Perubahan di HQ langsung tersinkron ke POS semua toko.</td><td>Katalog produk &amp; harga yang seragam</td></tr>
+<tr><td>Business Intelligence</td><td>Dasbor penjualan harian per toko, barang paling cepat laku, dan susut (barang hilang/dicuri).</td><td>Keputusan manajemen berbasis data</td></tr>
+</tbody></table></div>
+
+<h3>Lapisan 2 — Rantai Pasok &amp; Logistik (Distribution Center)</h3>
+<p>Menjaga ketersediaan stok di semua cabang tanpa pemesanan berlebih, melalui satu DC pusat yang dijalankan WMS.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Komponen</th><th>Fungsi</th><th>Pemicu / aturan</th></tr></thead>
+<tbody>
+<tr><td>Warehouse Management System</td><td>Melacak stok gudang pusat; algoritma prediktif menentukan waktu pemesanan ulang ke pemasok.</td><td>Berdasarkan <i>lead time</i> pemasok</td></tr>
+<tr><td>Pengisian Ulang Otomatis</td><td>POS mengirim data penjualan harian ke ERP. ERP membuat tiket <i>picking</i> di DC untuk toko yang stoknya menipis.</td><td>Stok item di toko &lt; ambang minimum → dikirim esok pagi</td></tr>
+<tr><td>Manajemen Armada</td><td>Optimasi rute truk perusahaan per klaster geografis.</td><td>1 truk mengisi 5–10 toko dalam satu perjalanan</td></tr>
+<tr><td>Cross-Docking</td><td>Barang segar cepat laku (roti, susu) dari pemasok langsung dipindah ke truk tujuan toko tanpa disimpan di rak gudang.</td><td>Kategori produk segar / cepat laku</td></tr>
+</tbody></table></div>
+
+<h3>Lapisan 3 — Operasional Toko</h3>
+<p>Arsitektur toko harus ringan, andal, dan tetap beroperasi saat internet terputus sementara.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Komponen</th><th>Fungsi</th><th>Pengguna</th></tr></thead>
+<tbody>
+<tr><td>POS Tersinkron Cloud</td><td>Mesin kasir yang bekerja offline; menyinkronkan penjualan, pengurangan stok, dan poin anggota ke ERP segera setelah koneksi pulih.</td><td>Kasir</td></tr>
+<tr><td>Perangkat Inventaris Genggam</td><td>Pemindai barcode / aplikasi seluler untuk stock opname, penerimaan kiriman DC, dan retur barang kedaluwarsa.</td><td>Staf toko</td></tr>
+<tr><td>Manajemen Planogram</td><td>Tata letak toko standar dari HQ yang menentukan posisi produk di rak untuk memaksimalkan pembelian impulsif.</td><td>Kepala toko, staf</td></tr>
+</tbody></table></div>
+
+<h3>Lapisan 4 — Manajemen Anggota Koperasi (CRM)</h3>
+<p>Pembeda utama KMP dari jaringan ritel korporasi: anggota adalah pelanggan sekaligus pemegang saham.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Komponen</th><th>Fungsi</th><th>Nilai bagi anggota</th></tr></thead>
+<tbody>
+<tr><td>Portal / Aplikasi Anggota</td><td>Kartu anggota digital (QR), riwayat poin belanja, dan estimasi SHU secara <i>real-time</i>.</td><td>Transparansi kepemilikan dan bagi hasil</td></tr>
+<tr><td>Harga Berjenjang &amp; Loyalitas</td><td>POS memindai QR anggota saat pembayaran, menerapkan diskon anggota otomatis, dan mencatat transaksi untuk porsi SHU.</td><td>Harga lebih murah, SHU sebanding dengan partisipasi belanja</td></tr>
+</tbody></table></div>
+
+<h2>4. Alur Sistem Utama</h2>
+
+<div class="flow">
+  <h3><span class="num">A</span>Transaksi belanja anggota</h3>
+  <ol class="steps">
+    <li><b>Toko</b>Anggota menunjukkan QR di aplikasi; kasir memindai barang dan QR</li>
+    <li><b>POS</b>Harga anggota &amp; promo dari MDM diterapkan otomatis</li>
+    <li><b>POS</b>Transaksi disimpan lokal (tetap jalan walau offline)</li>
+    <li><b>Sinkronisasi</b>Penjualan, mutasi stok, dan poin dikirim ke ERP saat online</li>
+    <li><b>CRM &amp; Keuangan</b>Poin dan nilai belanja anggota diperbarui; estimasi SHU di aplikasi ikut berubah</li>
+  </ol>
+</div>
+
+<div class="flow">
+  <h3><span class="num">B</span>Pengisian ulang stok otomatis</h3>
+  <ol class="steps">
+    <li><b>POS</b>Data penjualan harian dikirim ke ERP</li>
+    <li><b>ERP</b>Stok item toko di bawah ambang minimum terdeteksi</li>
+    <li><b>WMS</b>Tiket picking dibuat di DC untuk toko tersebut</li>
+    <li><b>Armada</b>Rute klaster disusun; 1 truk melayani 5–10 toko</li>
+    <li><b>Toko</b>Staf menerima kiriman pagi hari dengan perangkat genggam; stok toko bertambah</li>
+  </ol>
+</div>
+
+<div class="flow">
+  <h3><span class="num">C</span>Pengadaan dari pemasok &amp; cross-docking</h3>
+  <ol class="steps">
+    <li><b>WMS</b>Algoritma prediktif menandai kebutuhan pesan ulang sesuai lead time</li>
+    <li><b>Pengadaan</b>PO terpusat diterbitkan ke distributor FMCG dengan harga grosir</li>
+    <li><b>DC</b>Barang kering masuk rak gudang; barang segar langsung cross-dock ke truk keluar</li>
+    <li><b>Keuangan</b>Faktur pemasok dicatat sebagai utang usaha (AP)</li>
+  </ol>
+</div>
+
+<div class="flow">
+  <h3><span class="num">D</span>Perubahan harga, promo, dan planogram</h3>
+  <ol class="steps">
+    <li><b>HQ</b>Tim merchandising mengubah harga/promo atau tata letak rak</li>
+    <li><b>MDM</b>Data induk diperbarui sebagai satu sumber kebenaran</li>
+    <li><b>Sinkronisasi</b>Perubahan didorong ke POS dan perangkat seluruh toko</li>
+    <li><b>Toko</b>Harga baru berlaku di kasir; staf menata rak sesuai planogram</li>
+  </ol>
+</div>
+
+<div class="flow">
+  <h3><span class="num">E</span>Perhitungan dan pembagian SHU akhir tahun</h3>
+  <ol class="steps">
+    <li><b>Keuangan</b>Laba bersih tahunan ditutup buku</li>
+    <li><b>Keuangan</b>Porsi SHU untuk jasa anggota ditetapkan (sesuai AD/ART dan keputusan Rapat Anggota)</li>
+    <li><b>CRM</b>SHU dialokasikan per anggota berdasarkan riwayat transaksi tercatat</li>
+    <li><b>Aplikasi</b>Anggota melihat rincian SHU; pembayaran melalui bank/dompet digital <span class="tag">Rekomendasi</span></li>
+  </ol>
+</div>
+
+<h2>5. Peta Aliran Data Antar Sistem</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Dari → Ke</th><th>Data</th><th>Frekuensi</th></tr></thead>
+<tbody>
+<tr><td>MDM → POS toko</td><td>Harga, SKU/barcode, promo</td><td>Seketika saat ada perubahan</td></tr>
+<tr><td>HQ → Toko</td><td>Planogram</td><td>Per perubahan tata letak</td></tr>
+<tr><td>POS → ERP</td><td>Penjualan, pengurangan stok, poin anggota</td><td>Seketika saat online; antre saat offline</td></tr>
+<tr><td>POS → CRM</td><td>Transaksi per ID anggota</td><td>Setiap transaksi anggota</td></tr>
+<tr><td>ERP → WMS</td><td>Pesanan pengisian ulang toko</td><td>Harian</td></tr>
+<tr><td>WMS → Pengadaan</td><td>Kebutuhan pesan ulang ke pemasok</td><td>Sesuai lead time</td></tr>
+<tr><td>Perangkat genggam → ERP</td><td>Penerimaan barang, stock opname, retur</td><td>Per kejadian</td></tr>
+<tr><td>Semua sistem → BI</td><td>Penjualan, stok, susut, anggota</td><td>Harian (dasbor)</td></tr>
+<tr><td>Keuangan → CRM</td><td>Laba bersih &amp; alokasi SHU</td><td>Tahunan; estimasi berkala</td></tr>
+</tbody></table></div>
+
+<h2>6. Kebutuhan Non-Fungsional <span class="tag">Rekomendasi</span></h2>
+<ul>
+  <li><b>Ketahanan offline:</b> POS menyimpan transaksi di basis data lokal minimal beberapa hari operasi; antrean sinkronisasi menjamin tidak ada transaksi ganda atau hilang.</li>
+  <li><b>Skalabilitas:</b> ERP dan CRM berbasis cloud agar penambahan toko baru cukup dengan pendaftaran perangkat dan pengunduhan master data.</li>
+  <li><b>Keamanan &amp; privasi:</b> Data pribadi anggota dilindungi sesuai UU Pelindungan Data Pribadi; akses berbasis peran untuk kasir, kepala toko, dan HQ.</li>
+  <li><b>Integritas keuangan:</b> Jejak audit pada transaksi dan perhitungan SHU agar dapat dipertanggungjawabkan di Rapat Anggota.</li>
+  <li><b>Konektivitas:</b> Toko di daerah dengan sinyal lemah tetap beroperasi penuh; sinkronisasi memakai koneksi seluler cadangan bila tersedia.</li>
+</ul>
+
+<h2>7. Tahapan Implementasi <span class="tag">Rekomendasi</span></h2>
+<div class="phases">
+  <div class="phase"><h3>Tahap 1 · Fondasi</h3><ul><li>Cloud ERP: keuangan, pengadaan</li><li>Master Data (SKU, harga)</li><li>POS offline-first di toko percontohan</li></ul></div>
+  <div class="phase"><h3>Tahap 2 · Anggota</h3><ul><li>CRM &amp; aplikasi anggota (kartu QR)</li><li>Diskon berjenjang dan poin di POS</li><li>Estimasi SHU real-time</li></ul></div>
+  <div class="phase"><h3>Tahap 3 · Rantai Pasok</h3><ul><li>DC dengan WMS</li><li>Pengisian ulang otomatis</li><li>Manajemen armada dan cross-docking</li></ul></div>
+  <div class="phase"><h3>Tahap 4 · Optimasi</h3><ul><li>BI dan analitik susut</li><li>Planogram terpusat</li><li>Perluasan ke seluruh jaringan toko</li></ul></div>
+</div>
+
+</main>
+</body>
+</html>
