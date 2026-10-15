@@ -3,3 +3,6 @@
 .~lock.*
 .DS_Store
 Thumbs.db
+*:Zone.Identifier
+.render_tmp/
+
